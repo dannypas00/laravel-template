@@ -2,21 +2,20 @@
 
 namespace Tests\Integration;
 
+use Auth;
 use DB;
 use Http;
 use Illuminate\Database\Console\Migrations\StatusCommand as MigrationStatusCommand;
 use Illuminate\Mail\Message;
 use Laravel\Horizon\Console\StatusCommand as HorizonStatusCommand;
 use Mail;
-use Tests\Resources\TestMail;
 use Tests\TestCase;
 
 class EnvironmentRunningTest extends TestCase
 {
-    public function test_that_frank_has_started(): void
+    public function test_that_homepage_is_available(): void
     {
-        $success = Http::get('frank:8000/healthz')->successful();
-        $this->assertTrue($success);
+        $this->assertTrue(Http::get('frank:8000')->successful());
     }
 
     public function test_that_redis_has_started(): void

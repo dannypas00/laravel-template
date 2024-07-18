@@ -26,8 +26,9 @@ RUN set -eux; \
 	# Give write access to /data/caddy and /config/caddy
 	chown -R 1000:1000 /data/caddy && chown -R 1000:1000 /config/caddy
 
-COPY --link .docker/local/Caddyfile /etc/caddy/Caddyfile
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -; \
+    apt update; apt install -y nodejs; apt clean
 
 USER ${USER}
 
-ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
+ENTRYPOINT ["php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile"]
