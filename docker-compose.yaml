@@ -26,7 +26,24 @@ services:
       file: .docker/local/php-docker-compose.yaml
       service: base-php
     command:
-      - php-fpm
+      - sleep
+      - infinity
+
+  node:
+    container_name: ${APP_NAME}-node
+    image: node:22
+    ports:
+      - 5174:5174
+    working_dir: /app
+    command:
+      - npm
+      - run
+      - dev
+      - --
+      - --host
+      - --port=5174
+    volumes:
+      - ./:/app
 
   horizon:
     container_name: ${APP_NAME}-horizon
@@ -53,7 +70,6 @@ services:
 
   reverb:
     container_name: ${APP_NAME}-reverb
-    image: dannypas00/laravel-fpm:8.2
     extends:
       file: .docker/local/php-docker-compose.yaml
       service: base-php
@@ -82,6 +98,7 @@ services:
     volumes:
       - ./:/app
     tty: true
+    entrypoint: ["php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile"]
 
   mailpit:
     container_name: ${APP_NAME}-mailpit

@@ -6,38 +6,39 @@ ARG USER=app
 # Install composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && \
-    apt-get install -y --force-yes --no-install-recommends curl wget gpg && \
-    apt-get clean
+RUN set-eux; apt update; apt install -y gpg wget curl; apt clean
 
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions \
-	bcmath \
-	exif \
-	soap \
-	pcntl \
-	intl \
-	gmp \
-	zip \
-	pdo_mysql \
-	sockets \
-	gd \
+RUN set -eux; install-php-extensions \
+    exif \
+    soap \
+    pcntl \
+    intl \
+    gmp \
+    zip \
+    pdo_mysql \
+    sockets \
+    gd \
     redis \
     xdebug \
-    memcached \
-    imagick
+    memcached
 
-# Install nodejs
-RUN mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 
-RUN apt update && apt install -y nodejs && apt clean
+ARG USER=app
 
-RUN usermod -u 1000 ${USER}
+RUN set -eux; useradd -u 1000 -m ${USER};
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -; \
+    apt update; apt install -y nodejs; apt clean \
+
+# Install xdebug and copy config
+RUN docker-php-ext-enable xdebug
+ADD xdebug.ini /usr/local/etc/php/conf.d/zz_xdebug.ini
+RUN npm config --global set cache=/var/www/.npm
+RUN (mkdir /var/www/.npm || true) && chown -R 1000:1000 /var/www/.npm
+
 
 USER ${USER}
 
 WORKDIR /app
-
-ENTRYPOINT ["bash"]
