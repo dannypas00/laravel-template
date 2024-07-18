@@ -19,6 +19,8 @@ jobs:
     - uses: docker/setup-buildx-action@v3.4.0
       name: Setup buildx
 
+    - run: cp .env.example .env
+
     - run: docker compose up node
 
     - run: CUSTOM_USER=1001 make -B
