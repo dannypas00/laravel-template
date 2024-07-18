@@ -36,6 +36,6 @@ ADD .docker/local/xdebug.ini /usr/local/etc/php/conf.d/zz_xdebug.ini
 RUN npm config --global set cache=/var/www/.npm
 RUN (mkdir /var/www/.npm || true) && chown -R ${CUSTOM_USER_ID}:${CUSTOM_USER_ID} /var/www/.npm
 
-HEALTHCHECK CMD curl --fail http;//localhost:8000/ || exit 1
+HEALTHCHECK NONE
 
 USER ${USER}
