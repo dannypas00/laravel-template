@@ -44,6 +44,7 @@ services:
       - --port=5174
     volumes:
       - ./:/app
+      - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
 
   horizon:
     container_name: ${APP_NAME}-horizon

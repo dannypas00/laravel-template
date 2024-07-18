@@ -20,6 +20,7 @@ DOCKER ?= docker
 DOCKER_COMPOSE ?= $(DOCKER) compose
 
 PHP_CONTAINER = $(DOCKER_COMPOSE) run php
+NODE_CONTAINER = $(DOCKER_COMPOSE) run node
 
 ifeq ($(NO_DOCKER), true)
 PHP_CONTAINER =
@@ -27,7 +28,7 @@ endif
 
 PHP ?= $(PHP_CONTAINER) php
 COMPOSER ?= $(PHP_CONTAINER) composer
-NPM ?= $(PHP_CONTAINER) npm
+NPM ?= $(NODE_CONTAINER) npm
 
 .DEFAULT_TARGET: project-setup
 
