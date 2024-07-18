@@ -4,7 +4,10 @@ on:
     branches:
       - master
       - develop
-      - install
+  pull_request:
+    branches:
+      - develop
+      - master
 
 jobs:
   Run-make-with-integration-tests:

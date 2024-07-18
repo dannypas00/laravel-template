@@ -1,4 +1,5 @@
 {
+    "name": "laravel-template-project",
     "private": true,
     "type": "module",
     "scripts": {
