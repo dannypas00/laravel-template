@@ -98,6 +98,8 @@ services:
       - "${FRANKENPHP_PORT:-80}:8000"
     volumes:
       - ./:/app
+      - caddy_data:/data
+      - caddy_config:/config
     tty: true
     entrypoint: ["php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile"]
 
