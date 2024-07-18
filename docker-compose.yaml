@@ -67,21 +67,22 @@ services:
     ports:
       - "${REVERB_PORT:-6001}:6001"
 
-  nginx:
-    container_name: ${APP_NAME}-nginx
-    image: nginx:latest
+  frank:
+    container_name: ${APP_NAME}-frank
+    build:
+      dockerfile: .docker/local/frankenphp.Dockerfile
+      context: .
     env_file:
       - path: .env
         required: true
     depends_on:
-      - php
       - reverb
     ports:
-      - "${NGINX_PORT:-80}:80"
+      - "${FRANKENPHP_PORT:-80}:8000"
     volumes:
-      - .docker/local/nginx-includes:/etc/nginx/conf.d
-      - .docker/local/nginx.conf:/etc/nginx/nginx.conf
-      - ./:/var/www/project
+      - ./:/app
+      - .docker/local/Caddyfile:/etc/caddy/Caddyfile
+    tty: true
 
   mailpit:
     container_name: ${APP_NAME}-mailpit
@@ -96,3 +97,5 @@ services:
 volumes:
     mysql:
     npm-cache:
+    caddy_data:
+    caddy_config:

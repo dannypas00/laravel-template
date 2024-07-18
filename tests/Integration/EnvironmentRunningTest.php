@@ -49,9 +49,9 @@ class EnvironmentRunningTest extends TestCase
         $this->get(config('horizon.path'))->assertSuccessful();
     }
 
-    public function test_that_websocket_server_is_up(): void
+    public function test_that_reverb_server_is_up(): void
     {
-        $this->assertTrue(Http::get('http://websockets:6001')->notFound());
+        $this->assertTrue(Http::get('http://reverb:6001')->notFound());
     }
 
     public function test_that_mailpit_interface_is_up(): void
