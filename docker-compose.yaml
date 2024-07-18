@@ -89,6 +89,8 @@ services:
     build:
       dockerfile: .docker/local/frankenphp.Dockerfile
       context: .
+      args:
+        USER: ${CUSTOM_USER:-app}
     env_file:
       - path: .env
         required: true

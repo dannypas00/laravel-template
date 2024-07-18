@@ -19,9 +19,5 @@ jobs:
     - uses: docker/setup-buildx-action@v3.4.0
       name: Setup buildx
 
-    - uses: actions/setup-node@v4
-
-    - run: mkdir $HOME/.npm
-
-    - run: CUSTOM_USER=1001 make NPM=npm -B
+    - run: CUSTOM_USER=1001 make -B
       name: Run Make
