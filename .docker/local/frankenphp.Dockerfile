@@ -27,7 +27,7 @@ RUN set -eux; \
 	chown -R 1000:1000 /data/caddy && chown -R 1000:1000 /config/caddy
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -; \
-    apt update; apt install -y nodejs; apt clean \
+    apt update; apt install -y nodejs; apt clean
 
 # Install xdebug and copy config
 RUN docker-php-ext-enable xdebug
