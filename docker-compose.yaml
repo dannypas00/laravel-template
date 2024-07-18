@@ -75,13 +75,14 @@ services:
     env_file:
       - path: .env
         required: true
+    environment:
+      SERVER_NAME: "localhost frank"
     depends_on:
       - reverb
     ports:
       - "${FRANKENPHP_PORT:-80}:8000"
     volumes:
       - ./:/app
-      - .docker/local/Caddyfile:/etc/caddy/Caddyfile
     tty: true
 
   mailpit:

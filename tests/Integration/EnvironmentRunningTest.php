@@ -13,9 +13,9 @@ use Tests\TestCase;
 
 class EnvironmentRunningTest extends TestCase
 {
-    public function test_that_nginx_has_started(): void
+    public function test_that_frank_has_started(): void
     {
-        $success = Http::get('nginx:80/healthz')->successful();
+        $success = Http::get('frank:8000/healthz')->successful();
         $this->assertTrue($success);
     }
 

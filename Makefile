@@ -93,13 +93,17 @@ else
 endif
 
 .PHONY: init-db drop-db migrate seed
-init-db: docker-compose.yaml drop-db migrate seed
+init-db: drop-db docker-compose.yaml migrate seed
 migrate: database/migrations/
 seed: database/seeders/
 
 drop-db:
 ifeq ($(ENV), local)
+ifeq ($(NO_DOCKER), true)
 	$(PHP) artisan db:wipe || true
+else
+	$(DOCKER_COMPOSE) down -v
+endif
 endif
 
 database/migrations/: composer.lock docker-compose.yaml

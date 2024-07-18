@@ -26,8 +26,8 @@ RUN set -eux; \
 	# Give write access to /data/caddy and /config/caddy
 	chown -R 1000:1000 /data/caddy && chown -R 1000:1000 /config/caddy
 
-USER ${USER}
+COPY --link .docker/local/Caddyfile /etc/caddy/Caddyfile
 
-RUN echo $SHELL
+USER ${USER}
 
 ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
