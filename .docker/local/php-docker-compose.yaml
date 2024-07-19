@@ -5,15 +5,15 @@ services:
       context: .
     environment:
       APP_NAME: "laravel-template-project"
-    working_dir: /var/www/project
+    working_dir: /app
     user: ${CUSTOM_USER:-1000}
     command:
       - php
       - artisan
       - list
     volumes:
-      - ../../:/var/www/project:rw
+      - ../../:/app:rw
       - ./tests/output:/opt/phpstorm-coverage:rw
-      - $HOME/.config:/var/www/.config:rw
-      - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
-      - ${COMPOSER_CACHE:-$HOME/.cache/composer}:/var/www/.cache:rw
+      - $HOME/.config:/home/app/.config:rw
+      - ${NPM_CACHE_DIR:-$HOME/.npm}:/home/app/.npm:rw
+      - ${COMPOSER_CACHE:-$HOME/.cache/composer}:/home/app/.cache:rw

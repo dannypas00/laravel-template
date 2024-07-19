@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Users;
 
-use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Route;
+use Illuminate\Validation\Rules\Password;
 
 class BaseUserRequest extends FormRequest
 {

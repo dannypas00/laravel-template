@@ -14,6 +14,12 @@ class LiveSeeder extends Seeder
      */
     public function run(): void
     {
-        // TODO: Put your seeders in here that need to run in production
+        User::factory()->create([
+            'name'     => 'Test User',
+            'email'    => 'test@example.com',
+            'password' => 'test1234',
+        ]);
+
+        User::factory(30)->create();
     }
 }

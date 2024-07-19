@@ -31,10 +31,8 @@ window.Echo = new Echo({
   enabledTransports: ['ws', 'wss'],
   encrypted: true,
   authorizer: (channel, options) => {
-    console.log('a');
     return {
       authorize: (socketId, callback) => {
-        console.log('b');
         axios
           .post(
             '/broadcasting/auth',

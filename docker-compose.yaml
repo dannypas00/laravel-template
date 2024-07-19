@@ -8,10 +8,13 @@ services:
     ports:
       - "${MARIADB_PORT:-3306}:${MARIADB_PORT:-3306}"
     volumes:
-      - mysql:/var/lib/mysql/
+      - laravel-template-project-mysql:/var/lib/mysql/
     command:
       - mariadbd
       - --port=${MARIADB_PORT:-3306}
+    profiles:
+      - dev
+      - prod
 
   redis:
     container_name: ${APP_NAME}-redis
@@ -19,6 +22,9 @@ services:
     env_file:
       - path: .env
         required: true
+    profiles:
+      - dev
+      - prod
 
   php:
     container_name: ${APP_NAME}-php
@@ -28,22 +34,26 @@ services:
     command:
       - sleep
       - infinity
+    profiles:
+      - dev
 
   node:
     container_name: ${APP_NAME}-node
-    image: node:22
+    image: dannypas00/node
     ports:
       - 5174:5174
+    user: ${CUSTOM_USER:-1000}
     working_dir: /app
     command:
       - npx
-      - dev
-      - --
+      - vite
       - --host
       - --port=5174
     volumes:
       - ./:/app
       - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
+    profiles:
+      - dev
 
   horizon:
     container_name: ${APP_NAME}-horizon
@@ -57,6 +67,9 @@ services:
       - php
       - artisan
       - horizon
+    profiles:
+      - dev
+      - prod
 
   schedule:
     container_name: ${APP_NAME}-schedule
@@ -67,6 +80,9 @@ services:
       - php
       - artisan
       - schedule:work
+    profiles:
+      - dev
+      - prod
 
   reverb:
     container_name: ${APP_NAME}-reverb
@@ -82,6 +98,9 @@ services:
       - --debug
     ports:
       - "${REVERB_PORT:-6001}:6001"
+    profiles:
+      - dev
+      - prod
 
   frank:
     container_name: ${APP_NAME}-frank
@@ -102,7 +121,10 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     tty: true
-    entrypoint: ["php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile"]
+    command: [ "php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile" ]
+    profiles:
+      - dev
+      - prod
 
   mailpit:
     container_name: ${APP_NAME}-mailpit
@@ -113,9 +135,12 @@ services:
     ports:
       - "${MAILPIT_PORT:-1025}:1025"
       - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
+    profiles:
+      - dev
+      - prod
 
 volumes:
-    mysql:
-    npm-cache:
-    caddy_data:
-    caddy_config:
+  laravel-template-project-mysql:
+  npm-cache:
+  caddy_data:
+  caddy_config:

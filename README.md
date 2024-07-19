@@ -19,3 +19,18 @@ To change ports of services, change the [.env](.env) file, ports are imported fr
 - User credentials:
   - email: test@example.com
   - password: test1234
+
+## Deploying
+- Change template values in [Makefile](Makefile)
+- Ensure the `ENV` environment variable is set to `production`
+- Run `make`
+- Edit the [.env](.env) file to match the production environment
+- Run `make deploy`
+- This will install and expose the app according to the .env file
+
+### Reverse proxy
+To set up a reverse proxy on your host (e.g. for hosting multiple projects on one host):
+- Copy the [reverse-proxy.docker-compose.yaml](.docker/production/reverse-proxy.docker-compose.yaml) and [reverse-proxy.Caddyfile](.docker/production/reverse-proxy.Caddyfile) to a location on your host.
+- Configure the [reverse-proxy.Caddyfile](.docker/production/reverse-proxy.Caddyfile) to accept the correct host
+- Run the service with `docker compose up -d`
+- Adding more hosts is as simple as copy/pasting the contents of the Caddyfile and changing the external host and internal port
