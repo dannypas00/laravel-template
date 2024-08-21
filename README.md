@@ -1,6 +1,8 @@
 # laravel-template-project project
 [![Test integration on push](https://github.com/dannypas00/laravel-template/actions/workflows/test_integration_on_push.yaml/badge.svg)](https://github.com/dannypas00/laravel-template/actions/workflows/test_integration_on_push.yaml)  
-Insert your own readme information here
+
+## See this template in action at [laravel-template.dannypas00.com](https://laravel-template.dannypas00.com)
+Default credentials are `test@example.com` and `test1234`.
 
 ## Installation
 Run the command `make PROJECT_NAME=<your project name here>`, substituting for you project name.  
