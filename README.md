@@ -2,6 +2,14 @@
 [![Test integration on push](https://github.com/dannypas00/laravel-template/actions/workflows/test_integration_on_push.yaml/badge.svg)](https://github.com/dannypas00/laravel-template/actions/workflows/test_integration_on_push.yaml)  
 Insert your own readme information here
 
+## Requirements
+To use the template (and its associated make-/justfile), the following dependencies are required to be installed on your system:
+- [GNU/Make](https://www.gnu.org/software/make)
+- [Just](https://github.com/casey/just)
+- [Docker](https://docs.docker.com/get-started/get-docker)
+- [Docker compose plugin](https://docs.docker.com/compose/install/linux)
+- [Nodejs / NPM](https://nodejs.org)
+
 ## Installation
 Run the command `make PROJECT_NAME=<your project name here>`, substituting for you project name.  
 This make target will install all required dependencies and replace all templating with your chosen project name.  

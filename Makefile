@@ -47,6 +47,7 @@ project-setup: install init-db test-integration vendor/autoload.php
 dependencies:
 	@(command -v npm > /dev/null) || (echo "NPM not installed" && exit 127)
 	@(command -v docker > /dev/null) || (echo "Docker not installed" && exit 127)
+	@(command -v just > /dev/null) || (echo "Just not installed" && exit 127)
 	@(docker compose > /dev/null) || (echo "Docker compose plugin not installed" && exit 127)
 
 clean:
