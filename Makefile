@@ -17,7 +17,7 @@ TEMPLATES = $(TEMPLATE_GITHUB_URL)/$(GITHUB_URL) laravel-template-namespace/$(PR
 NO_DOCKER ?= false
 
 DOCKER ?= docker
-DOCKER_COMPOSE ?= $(DOCKER) compose
+DOCKER_COMPOSE ?= docker compose
 
 PHP_CONTAINER = $(DOCKER_COMPOSE) run frank
 NODE_CONTAINER = $(DOCKER_COMPOSE) run node
