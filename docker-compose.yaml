@@ -1,10 +1,18 @@
 services:
-  db:
-    container_name: ${APP_NAME}-db
-    image: mariadb:latest
+  x-function-base: &base
     env_file:
       - path: .env
         required: true
+    profiles:
+      - dev
+      - prod
+    user: ${CUSTOM_USER:-1000}
+
+  db:
+    <<: *base
+    container_name: ${APP_NAME}-db
+    image: mariadb:latest
+    user: root
     ports:
       - "${MARIADB_PORT:-3306}:${MARIADB_PORT:-3306}"
     volumes:
@@ -12,21 +20,14 @@ services:
     command:
       - mariadbd
       - --port=${MARIADB_PORT:-3306}
-    profiles:
-      - dev
-      - prod
 
   redis:
+    <<: *base
     container_name: ${APP_NAME}-redis
     image: redis:latest
-    env_file:
-      - path: .env
-        required: true
-    profiles:
-      - dev
-      - prod
 
   php:
+    <<: *base
     container_name: ${APP_NAME}-php
     extends:
       file: .docker/local/php-docker-compose.yaml
@@ -34,15 +35,15 @@ services:
     command:
       - sleep
       - infinity
-    profiles:
+    profiles: !override
       - dev
 
   node:
+    <<: *base
     container_name: ${APP_NAME}-node
     image: dannypas00/node
     ports:
       - 5174:5174
-    user: ${CUSTOM_USER:-1000}
     working_dir: /app
     command:
       - npx
@@ -52,10 +53,11 @@ services:
     volumes:
       - ./:/app
       - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
-    profiles:
+    profiles: !override
       - dev
 
   horizon:
+    <<: *base
     container_name: ${APP_NAME}-horizon
     depends_on:
       - redis
@@ -67,11 +69,9 @@ services:
       - php
       - artisan
       - horizon
-    profiles:
-      - dev
-      - prod
 
   schedule:
+    <<: *base
     container_name: ${APP_NAME}-schedule
     extends:
       file: .docker/local/php-docker-compose.yaml
@@ -80,11 +80,9 @@ services:
       - php
       - artisan
       - schedule:work
-    profiles:
-      - dev
-      - prod
 
   reverb:
+    <<: *base
     container_name: ${APP_NAME}-reverb
     extends:
       file: .docker/local/php-docker-compose.yaml
@@ -98,20 +96,15 @@ services:
       - --debug
     ports:
       - "${REVERB_PORT:-6001}:6001"
-    profiles:
-      - dev
-      - prod
 
   frank:
+    <<: *base
     container_name: ${APP_NAME}-frank
     build:
       dockerfile: .docker/local/frankenphp.Dockerfile
       context: .
       args:
         USER: ${CUSTOM_USER:-app}
-    env_file:
-      - path: .env
-        required: true
     depends_on:
       - reverb
     ports:
@@ -122,22 +115,14 @@ services:
       - caddy_config:/config
     tty: true
     command: [ "php", "artisan", "octane:frankenphp", "--watch", "--caddyfile=/app/.docker/local/Caddyfile" ]
-    profiles:
-      - dev
-      - prod
 
   mailpit:
+    <<: *base
     container_name: ${APP_NAME}-mailpit
     image: axllent/mailpit:latest
-    env_file:
-      - path: .env
-        required: true
     ports:
       - "${MAILPIT_PORT:-1025}:1025"
       - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
-    profiles:
-      - dev
-      - prod
 
 volumes:
   laravel-template-project-mysql:
