@@ -21,6 +21,9 @@ jobs:
 
     - run: cp .env.example .env
 
+    - run: id
+      name: Get user id
+
     - run: docker compose up node
 
     - run: CUSTOM_USER=1001 make -B
