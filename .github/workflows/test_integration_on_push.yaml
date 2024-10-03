@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v4
       name: Checkout
 
-    - run: chown -R ${UID}:${GID} .
+    - run: chown -R ${UID}:${UID} .
       name: Change owner of all files if required
 
     - uses: docker/setup-buildx-action@v3.4.0
