@@ -130,9 +130,9 @@ endif
 docker:
 ifneq ($(NO_DOCKER), true)
 ifeq ($(ENV), local)
-	$(DOCKER_COMPOSE) --profile dev up -d --wait --remove-orphans
+	$(DOCKER_COMPOSE) --profile dev up -d --remove-orphans
 else
-	$(DOCKER_COMPOSE) --profile prod up -d --wait --remove-orphans
+	$(DOCKER_COMPOSE) --profile prod up -d --remove-orphans
 endif
 endif
 
