@@ -16,6 +16,9 @@ jobs:
     - uses: actions/checkout@v4
       name: Checkout
 
+    - run: chown -R ${UID}:${GID} .
+      name: Change owner of all files if required
+
     - uses: docker/setup-buildx-action@v3.4.0
       name: Setup buildx
 
@@ -23,5 +26,5 @@ jobs:
 
     - run: docker compose up node
 
-    - run: CUSTOM_USER=1001 make -B
+    - run: CUSTOM_USER=${UID} make -B
       name: Run Make

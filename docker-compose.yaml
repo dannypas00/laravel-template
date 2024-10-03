@@ -77,7 +77,7 @@ services:
       - --host
       - --port=5174
     volumes:
-      - ./:/app
+      - ./:/app:rw
       - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
     profiles: !override
       - dev
