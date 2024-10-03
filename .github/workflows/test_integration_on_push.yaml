@@ -23,5 +23,7 @@ jobs:
 
     - run: docker compose up node
 
+    - run: docker compose exec node id
+
     - run: CUSTOM_USER=${UID} make -B
       name: Run Make

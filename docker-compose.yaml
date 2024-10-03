@@ -72,8 +72,6 @@ services:
       - 5174:5174
     working_dir: /app
     command:
-      - id
-      - "&&"
       - npx
       - vite
       - --host
