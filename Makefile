@@ -18,12 +18,20 @@ NO_DOCKER ?= false
 
 DOCKER ?= docker
 DOCKER_COMPOSE ?= docker compose
+NODE_LOCAL ?= false
 
 PHP_CONTAINER = $(DOCKER_COMPOSE) run php
 NODE_CONTAINER = $(DOCKER_COMPOSE) run node
 
 ifeq ($(NO_DOCKER), true)
 PHP_CONTAINER =
+NODE_LOCAL = true
+endif
+
+ifeq ($(ENV), local)
+NPM_INSTALL_ARGS =
+else
+NPM_INSTALL_ARGS = --omit=dev
 endif
 
 PHP ?= $(PHP_CONTAINER) php
@@ -80,19 +88,17 @@ else
 endif
 
 node_modules:
-ifeq ($(ENV), local)
-	$(NPM) ci
+ifeq ($(NODE_LOCAL), true)
+	npm ci $(NPM_INSTALL_ARGS)
 else
-	$(NPM) ci --omit=dev
+	$(NPM) ci $(NPM_INSTALL_ARGS)
 endif
 
 package-lock.json:
-ifeq ($(ENV), local)
-	@# Ensure npm cache directory exists
-	$(NODE_CONTAINER) sh -c "(mkdir -p \`npm config get cache\` || true) && chown -R \`id -u\`:\`id -g\` \`npm config get cache\` && npm install"
+ifeq ($(NODE_LOCAL), true)
+	npm install $(NPM_INSTALL_ARGS)
 else
-	@# Ensure npm cache directory exists
-	$(NODE_CONTAINER) sh -c "(mkdir -p \`npm config get cache\` || true) && chown -R \`id -u\`:\`id -g\` \`npm config get cache\` && npm install --omit=dev"
+	$(NPM) install $(NPM_INSTALL_ARGS)
 endif
 
 .PHONY: init-db drop-db migrate seed
