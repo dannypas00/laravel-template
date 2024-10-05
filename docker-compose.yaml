@@ -5,14 +5,16 @@ services:
     env_file:
       - path: .env
         required: true
+    command:
+      - sleep
+      - infinity
     profiles:
       - dev
       - prod
     user: ${CUSTOM_USER:-1000}
 
   x-function-php: &php
-    restart: unless-stopped
-    user: ${CUSTOM_USER:-1000}
+    <<: *base
     build:
       dockerfile: cli.Dockerfile
       context: .docker/local/
@@ -22,13 +24,6 @@ services:
     env_file:
       - path: .env
         required: true
-    command:
-      - php
-      - artisan
-      - list
-    profiles:
-      - dev
-      - prod
     volumes:
       - ./:/app:rw
       - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
