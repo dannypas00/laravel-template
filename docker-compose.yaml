@@ -22,10 +22,9 @@ services:
     env_file:
       - path: .env
         required: true
-    entrypoint:
+    command:
       - php
       - artisan
-    command:
       - list
     profiles:
       - dev
@@ -58,7 +57,7 @@ services:
   php:
     <<: *php
     container_name: ${APP_NAME}-php
-    entrypoint:
+    command:
       - sleep
       - infinity
     profiles: !override
@@ -89,6 +88,8 @@ services:
       - redis
       - db
     command:
+      - php
+      - artisan
       - horizon
     profiles:
       - dev
@@ -98,6 +99,8 @@ services:
     <<: *php
     container_name: ${APP_NAME}-schedule
     command:
+      - php
+      - artisan
       - schedule:work
     profiles:
       - dev
@@ -107,6 +110,8 @@ services:
     <<: *php
     container_name: ${APP_NAME}-reverb
     command:
+      - php
+      - artisan
       - reverb:start
       - --port=6001
       - --host=0.0.0.0
