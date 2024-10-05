@@ -87,12 +87,12 @@ else
 endif
 
 package-lock.json:
-	@# Ensure npm cache directory exists
-	$(NODE_CONTAINER) sh -c "mkdir -p \`npm config get cache\`"
 ifeq ($(ENV), local)
-	$(NPM) install
+	@# Ensure npm cache directory exists
+	$(NODE_CONTAINER) sh -c "(mkdir -p \`npm config get cache\` || true) && chown -R \`id -u\`:\`id -g\` \`npm config get cache\` && npm install"
 else
-	$(NPM) install --omit=dev
+	@# Ensure npm cache directory exists
+	$(NODE_CONTAINER) sh -c "(mkdir -p \`npm config get cache\` || true) && chown -R \`id -u\`:\`id -g\` \`npm config get cache\` && npm install --omit=dev"
 endif
 
 .PHONY: init-db drop-db migrate seed
