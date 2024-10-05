@@ -83,7 +83,7 @@ services:
       - --port=5174
     volumes:
       - ./:/app:rw
-      - ${NPM_CACHE_DIR:-$HOME/.npm}:/var/www/.npm:rw
+      - ${NPM_CACHE_DIR:-$HOME/.npm}:/home/node/.npm:rw
     profiles: !override
       - dev
 
