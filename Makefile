@@ -160,8 +160,8 @@ ifeq ($(ENV), local)
 endif
 
 .PHONY: app-key
-app-key: up
-	@# Only generate an app key if the .env doesn't have on yet
+app-key: .env up
+	@# Only generate an app key if the .env doesn't have one yet
 	(grep "^APP_KEY=$$" .env && $(PHP) artisan key:generate) || true
 
 resources/js/: package-lock.json
