@@ -41,7 +41,7 @@ $(TEMPLATES):
 	@grep -rl "laravel-template" . --exclude-dir=public/build --exclude-dir=vendor --exclude-dir=node_modules --exclude-dir=.idea --exclude=Makefile --exclude-dir=.git | xargs sed -i 's/$(@)/g' || true
 
 .PHONY: prod clean install deploy project-setup clear-cache dependencies
-install: $(TEMPLATES) dependencies .env.example docker-build composer.lock package-lock.json composer.json package.json docker app-key
+install: $(TEMPLATES) dependencies .env.example docker-build composer.lock package-lock.json composer.json package.json up app-key
 project-setup: install init-db test-integration vendor/autoload.php
 
 dependencies:
@@ -94,7 +94,7 @@ else
 endif
 
 .PHONY: init-db drop-db migrate seed
-init-db: drop-db docker migrate seed
+init-db: up drop-db migrate seed
 migrate: database/migrations/
 seed: database/seeders/
 
@@ -103,7 +103,7 @@ ifeq ($(ENV), local)
 	$(PHP) artisan db:wipe || true
 endif
 
-database/migrations/: composer.lock docker
+database/migrations/: composer.lock up
 ifeq ($(ENV), local)
 	$(PHP) artisan migrate -n
 else
@@ -115,7 +115,7 @@ ifeq ($(ENV), local)
 	$(PHP) artisan db:seed --class=Database\\Seeders\\DatabaseSeeder
 endif
 
-.PHONY: docker-build docker up down
+.PHONY: docker-build up down
 docker-build:
 ifneq ($(NO_DOCKER), true)
 ifeq ($(ENV), local)
@@ -127,7 +127,7 @@ else
 endif
 endif
 
-docker:
+up:
 ifneq ($(NO_DOCKER), true)
 ifeq ($(ENV), local)
 	$(DOCKER_COMPOSE) --profile dev up -d --remove-orphans
@@ -136,7 +136,6 @@ else
 endif
 endif
 
-up: docker
 down:
 ifneq ($(NO_DOCKER), true)
 ifeq ($(ENV), local)
@@ -147,13 +146,13 @@ endif
 endif
 
 .PHONY: test-integration
-test-integration: docker
+test-integration: up
 ifeq ($(ENV), local)
 	$(PHP) artisan test --env=integration --testsuite=Integration
 endif
 
 .PHONY: app-key
-app-key: docker
+app-key: up
 	@# Only generate an app key if the .env doesn't have on yet
 	(grep "^APP_KEY=$$" .env && $(PHP) artisan key:generate) || true
 
