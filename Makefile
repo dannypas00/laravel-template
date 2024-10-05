@@ -106,7 +106,7 @@ init-db: up drop-db migrate seed
 migrate: database/migrations/
 seed: database/seeders/
 
-drop-db:
+drop-db: up
 ifeq ($(ENV), local)
 	$(PHP) artisan db:wipe || true
 endif
