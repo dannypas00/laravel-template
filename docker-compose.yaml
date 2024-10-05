@@ -148,6 +148,7 @@ services:
     <<: *base
     container_name: ${APP_NAME}-mailpit
     image: axllent/mailpit:latest
+    command: []
     ports:
       - "${MAILPIT_PORT:-1025}:1025"
       - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
