@@ -144,6 +144,7 @@ endif
 .PHONY: test-integration
 test-integration: up
 ifeq ($(ENV), local)
+	$(MAKE) up
 	$(PHP) artisan test --env=integration --testsuite=Integration
 endif
 
