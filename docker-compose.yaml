@@ -73,6 +73,7 @@ services:
     <<: *base
     container_name: ${APP_NAME}-node
     image: dannypas00/node
+    user: ${CUSTOM_USER:-1000}
     ports:
       - 5174:5174
     working_dir: /app
