@@ -20,8 +20,8 @@ DOCKER ?= docker
 DOCKER_COMPOSE ?= docker compose
 NODE_LOCAL ?= false
 
-PHP_CONTAINER = $(DOCKER_COMPOSE) run php
-NODE_CONTAINER = $(DOCKER_COMPOSE) run node
+PHP_CONTAINER = $(DOCKER_COMPOSE) exec php
+NODE_CONTAINER = $(DOCKER_COMPOSE) exec node
 
 ifeq ($(NO_DOCKER), true)
 PHP_CONTAINER =
@@ -61,10 +61,10 @@ clean:
 	$(DOCKER_COMPOSE) down -v
 	rm -rf composer.lock package-lock.json vendor node_modules bootstrap/cache/*.php public/build
 
-deploy: install clear-cache resources/js/ migrate vendor/autoload.php
+deploy: install clear-cache resources/js/ migrate vendor/autoload.php up
 	$(PHP) artisan optimize
 
-clear-cache:
+clear-cache: up
 	$(PHP) artisan optimize:clear
 
 .env:
@@ -72,7 +72,7 @@ clear-cache:
 	[[ -f .env ]] || cp .env.example .env
 
 vendor: composer.lock
-composer.lock:
+composer.lock: up
 ifeq ($(ENV), local)
 	$(COMPOSER) install --prefer-dist
 else
@@ -80,7 +80,7 @@ else
 endif
 	$(COMPOSER) clear-cache --gc
 
-vendor/autoload.php:
+vendor/autoload.php: up
 ifeq ($(ENV), local)
 	$(COMPOSER) dump-autoload
 else
@@ -118,7 +118,7 @@ else
 	$(PHP) artisan migrate
 endif
 
-database/seeders/: drop-db database/migrations/ database/factories/
+database/seeders/: drop-db database/migrations/ database/factories/ up
 ifeq ($(ENV), local)
 	$(PHP) artisan db:seed --class=Database\\Seeders\\DatabaseSeeder
 endif
