@@ -30,8 +30,10 @@ endif
 
 ifeq ($(ENV), local)
 NPM_INSTALL_ARGS =
+COMPOSE_PROFILE = --profile dev
 else
 NPM_INSTALL_ARGS = --omit=dev
+COMPOSE_PROFILE = --profile prod
 endif
 
 PHP ?= $(PHP_CONTAINER) php
@@ -126,31 +128,17 @@ endif
 .PHONY: docker-build up down
 docker-build:
 ifneq ($(NO_DOCKER), true)
-ifeq ($(ENV), local)
-	$(DOCKER_COMPOSE) --profile dev pull
-	$(DOCKER_COMPOSE) --profile dev build
-else
-	$(DOCKER_COMPOSE) pull
-	$(DOCKER_COMPOSE) build
-endif
+	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) build --pull
 endif
 
 up:
 ifneq ($(NO_DOCKER), true)
-ifeq ($(ENV), local)
-	$(DOCKER_COMPOSE) --profile dev up -d --remove-orphans
-else
-	$(DOCKER_COMPOSE) --profile prod up -d --remove-orphans
-endif
+	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) up -d --remove-orphans
 endif
 
 down:
 ifneq ($(NO_DOCKER), true)
-ifeq ($(ENV), local)
-	$(DOCKER_COMPOSE) --profile dev down
-else
-	$(DOCKER_COMPOSE) --profile prod down
-endif
+	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) down
 endif
 
 .PHONY: test-integration
@@ -162,7 +150,7 @@ endif
 .PHONY: app-key
 app-key: .env up
 	@# Only generate an app key if the .env doesn't have one yet
-	(grep "^APP_KEY=$$" .env && $(PHP) artisan key:generate) || true
+	(grep "^APP_KEY=$$" .env && $(PHP) artisan key:generate && $(DOCKER_COMPOSE) $(COMPOSE_PROFILE) restart frank || true
 	grep "^APP_KEY=" .env
 
 resources/js/: package-lock.json
