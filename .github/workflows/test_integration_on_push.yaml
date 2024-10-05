@@ -19,9 +19,14 @@ jobs:
     - uses: docker/setup-buildx-action@v3.4.0
       name: Setup buildx
 
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+
     - run: cp .env.example .env
 
-    - run: docker compose up node
+    - run: echo CUSTOM_USER=${UID} >> .env
 
-    - run: CUSTOM_USER=1001 make -B
+    - run: make NODE_LOCAL=true -B
       name: Run Make

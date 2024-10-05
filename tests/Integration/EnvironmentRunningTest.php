@@ -15,7 +15,8 @@ class EnvironmentRunningTest extends TestCase
 {
     public function test_that_homepage_is_available(): void
     {
-        $this->assertTrue(Http::get('frank:8000')->successful());
+        $response = Http::get('frank:8000');
+        $this->assertTrue($response->successful());
     }
 
     public function test_that_redis_has_started(): void

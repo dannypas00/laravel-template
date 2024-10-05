@@ -1,0 +1,4 @@
+# Reverse-proxy all requests to <your-host> to port 8080 on the docker machine
+<your-host> {
+    reverse_proxy 172.17.0.1:8080
+}
