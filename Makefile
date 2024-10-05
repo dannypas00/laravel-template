@@ -41,7 +41,7 @@ $(TEMPLATES):
 	@grep -rl "laravel-template" . --exclude-dir=public/build --exclude-dir=vendor --exclude-dir=node_modules --exclude-dir=.idea --exclude=Makefile --exclude-dir=.git | xargs sed -i 's/$(@)/g' || true
 
 .PHONY: prod clean install deploy project-setup clear-cache dependencies
-install: $(TEMPLATES) dependencies .env.example docker-build composer.lock package-lock.json composer.json package.json up app-key
+install: $(TEMPLATES) dependencies .env docker-build composer.lock package-lock.json vendor node_modules up app-key
 project-setup: install init-db test-integration vendor/autoload.php
 
 dependencies:
@@ -59,11 +59,11 @@ deploy: install clear-cache resources/js/ migrate vendor/autoload.php
 clear-cache:
 	$(PHP) artisan optimize:clear
 
-.env.example:
+.env:
 	@# Copy env.example file if env file doesn't exist yet
 	[[ -f .env ]] || cp .env.example .env
 
-composer.json: composer.lock
+vendor: composer.lock
 composer.lock:
 ifeq ($(ENV), local)
 	$(COMPOSER) install --prefer-dist
@@ -79,7 +79,7 @@ else
 	$(COMPOSER) dump-autoload --classmap-authoritative --apcu
 endif
 
-package.json:
+node_modules:
 ifeq ($(ENV), local)
 	$(NPM) ci
 else
@@ -87,6 +87,8 @@ else
 endif
 
 package-lock.json:
+	@# Ensure npm cache directory exists
+	$(NODE_CONTAINER) sh -c "mkdir -p \`npm config get cache\`"
 ifeq ($(ENV), local)
 	$(NPM) install
 else
