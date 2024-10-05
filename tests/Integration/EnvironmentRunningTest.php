@@ -16,7 +16,6 @@ class EnvironmentRunningTest extends TestCase
     public function test_that_homepage_is_available(): void
     {
         $response = Http::get('frank:8000');
-        echo $response->getStatusCode() . ' - ' . $response->body();
         $this->assertTrue($response->successful());
     }
 

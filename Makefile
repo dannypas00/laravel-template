@@ -145,6 +145,7 @@ endif
 test-integration: up
 ifeq ($(ENV), local)
 	$(MAKE) up
+	sleep 5
 	$(PHP) artisan test --env=integration --testsuite=Integration
 endif
 
