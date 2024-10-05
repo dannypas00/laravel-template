@@ -33,8 +33,6 @@ services:
       - ./:/app:rw
       - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
       - $HOME/.config:/home/app/.config:rw
-      - ${NPM_CACHE_DIR:-npm-cache}:/home/app/.npm:rw
-      - ${COMPOSER_CACHE:-composer-cache}:/home/app/.cache:rw
 
   db:
     <<: *base
@@ -84,7 +82,6 @@ services:
       - --port=5174
     volumes:
       - ./:/app:rw
-      - ${NPM_CACHE_DIR:-npm-cache}:/home/node/.npm:rw
     profiles: !override
       - dev
 
@@ -142,8 +139,6 @@ services:
       - ./:/app:rw
       - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
       - $HOME/.config:/home/app/.config:rw
-      - ${NPM_CACHE_DIR:-$HOME/.npm}:/home/app/.npm:rw
-      - ${COMPOSER_CACHE:-composer-cache}:/home/app/.cache:rw
       - caddy_data:/data
       - caddy_config:/config
     tty: true
@@ -164,7 +159,5 @@ services:
 
 volumes:
   laravel-template-project-mysql:
-  npm-cache:
-  composer-cache:
   caddy_data:
   caddy_config:
