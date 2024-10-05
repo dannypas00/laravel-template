@@ -163,6 +163,7 @@ endif
 app-key: .env up
 	@# Only generate an app key if the .env doesn't have one yet
 	(grep "^APP_KEY=$$" .env && $(PHP) artisan key:generate) || true
+	grep "^APP_KEY=" .env
 
 resources/js/: package-lock.json
 	@# If public/hot is present, laravel will try to serve from vite server
