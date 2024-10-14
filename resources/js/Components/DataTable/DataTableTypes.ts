@@ -31,9 +31,9 @@ export type SearchFilterOption = BaseFilterOption & {
 
 export type SelectFilterOption<T extends Record<string, unknown>> =
   BaseFilterOption & {
-    options?: T[];
+    options?: Array<string|number|boolean>;
     label?: (option: T) => string;
-    value?: (option: T) => string;
+    value?: (option: T) => string|number|boolean;
     type: FilterType.Select;
   };
 

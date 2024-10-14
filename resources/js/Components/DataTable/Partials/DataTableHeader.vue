@@ -11,20 +11,10 @@
           prefix: 'fas',
           iconName: 'arrow-up',
         }"
-        :rotation="
-          sortDirectionMap[header.key] === SortDirection.Desc ? 180 : undefined
-        "
+        :rotation="sortDirection === SortDirection.Desc ? 180 : undefined"
         class="cursor-pointer"
-        :class="{
-          'text-brand-light':
-            sortDirectionMap[header.key] !== SortDirection.None,
-        }"
-        @click="
-          () =>
-            (sortDirectionMap[header.key] = nextSortDirection(
-              sortDirectionMap[header.key]
-            ))
-        "
+        :class="{ 'text-brand-light': sortDirection !== SortDirection.None }"
+        @click="() => (sortDirection = nextSortDirection(sortDirection))"
       />
       <div class="group relative h-full grow py-3.5 pr-3">
         <span
@@ -47,7 +37,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, inject, PropType, Ref, ref } from 'vue';
+import { computed, ComputedRef, inject, PropType, Ref } from 'vue';
 import { DateFilterType, FilterType, TableHeader } from '../DataTableTypes';
 import DataTableSearchFilter from './Filters/DataTableSearchFilter.vue';
 import DataTableDateRangeFilter from './Filters/DataTableDateRangeFilter.vue';
@@ -75,6 +65,13 @@ let sortDirectionMap: undefined | Ref<Record<string, SortDirection>>;
 if (props.header.sortable) {
   sortDirectionMap = inject('sort-values');
 }
+
+const sortDirection: ComputedRef<SortDirection> = computed(() => {
+  if (!sortDirectionMap?.value) {
+    return SortDirection.None;
+  }
+  return sortDirectionMap.value[props.header.key];
+});
 
 const filterComponent = computed(() => {
   if (!props.header.filter) {
