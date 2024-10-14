@@ -133,7 +133,7 @@ endif
 
 up:
 ifneq ($(NO_DOCKER), true)
-	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) up -d --remove-orphans
+	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) up -d --remove-orphans --wait
 endif
 
 down:
