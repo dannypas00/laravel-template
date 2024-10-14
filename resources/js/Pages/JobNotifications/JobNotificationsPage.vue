@@ -13,7 +13,11 @@
       <div class="w-24" v-if="entry.maxProgress > 0">
         <div class="flex items-center space-x-2">
           <span>{{ entry.progress }} / {{ entry.maxProgress }}</span>
-          <span>{{ ((entry.progress / entry.maxProgress) * 100).toFixed(0) }}%</span>
+          <span
+            >{{
+              ((entry.progress / entry.maxProgress) * 100).toFixed(0)
+            }}%</span
+          >
         </div>
         <div class="w-full overflow-hidden rounded-full bg-gray-200">
           <div
@@ -22,9 +26,7 @@
           ></div>
         </div>
       </div>
-      <span v-else>
-        Waiting to start
-      </span>
+      <span v-else> Waiting to start </span>
     </template>
   </DataTable>
 </template>
@@ -84,6 +86,9 @@ function getTableHeaders(): TableHeader<Job>[] {
       key: 'started',
       title: 'Started',
       sortable: true,
+      renderBody(entry): string {
+        return entry.started?.toLocaleTimeString() ?? '';
+      },
       filter: {
         filter: 'started',
         type: FilterType.Date,
@@ -94,6 +99,9 @@ function getTableHeaders(): TableHeader<Job>[] {
       key: 'finished',
       title: 'Finished',
       sortable: true,
+      renderBody(entry): string {
+        return entry.finished?.toLocaleTimeString() ?? '';
+      },
       filter: {
         filter: 'finished',
         type: FilterType.Date,
@@ -126,28 +134,20 @@ async function startNewJob() {
       console.log('Job update', event);
       let job: Partial<Job> = jobs.value[event.identifier];
 
-      if (!job) {
-        jobs.value[event.identifier] = {
-          identifier: event.identifier,
-          status: JobStatusEnum.QUEUED,
-          progress: 0,
-          maxProgress: 0,
-          started: new Date(),
-          finished: null,
-        };
-
-        job = jobs.value[event.identifier];
-      }
-
       job.status = event.status;
       job.progress = event.progress;
       job.maxProgress = event.maxProgress;
 
-      if (
-        job.status === JobStatusEnum.FAILED ||
-        job.status === JobStatusEnum.SUCCEEDED
-      ) {
-        job.finished = new Date();
+      switch (event.status) {
+        case JobStatusEnum.RUNNING:
+          if (!job.started) {
+            job.started = new Date();
+          }
+          break;
+        case JobStatusEnum.FAILED:
+        case JobStatusEnum.SUCCEEDED:
+          job.finished = new Date();
+          break;
       }
     }
   );
