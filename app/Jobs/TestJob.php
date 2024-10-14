@@ -11,6 +11,7 @@ class TestJob extends BaseProgressJob
     public function __construct(private readonly string $runtime)
     {
         parent::__construct();
+        $this->maxProgress = $this->runtime;
     }
 
     public function handle(): void
