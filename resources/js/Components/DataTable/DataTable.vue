@@ -42,12 +42,12 @@
           <tbody class="divide-y divide-gray-200 bg-white">
             <tr
               v-for="entry in data"
-              :key="entry.email"
+              :key="entry[identifier]"
               :class="[selected.includes(entry[identifier]) && 'bg-gray-50']"
             >
-              <td class="relative px-7 sm:w-12 sm:px-6">
+              <td class="relative px-7 sm:w-12 sm:px-6" v-if="selectable">
                 <div
-                  v-if="selected.includes(entry.email)"
+                  v-if="selected.includes(entry[identifier])"
                   class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600"
                 />
                 <input
@@ -66,7 +66,9 @@
                 :header="header"
                 :entry="entry"
                 :selected="selected?.includes(entry[identifier])"
-              />
+              >
+                <slot v-if="header.bodySlot" :name="header.bodySlot" :header="header" :entry="entry" />
+              </DataTableCell>
               <EditButton />
             </tr>
           </tbody>

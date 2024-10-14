@@ -4,6 +4,8 @@ use App\Actions\Fortify\CreateNewUser;
 use App\DataObjects\UserData;
 use App\Http\Controllers\Users\UserQueryBuilderController;
 use App\Http\Controllers\Users\UserUpdateController;
+use App\Jobs\TestJob;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -24,10 +26,18 @@ Route::middleware([
             )->name('create');
             Route::put('{user}', UserUpdateController::class)->name('update');
         });
+
+        Route::post('test-job', static function () {
+            $job = new TestJob(100);
+            dispatch($job);
+            return $job->getIdentifier();
+        })->name('test-job');
     });
 
     Route::inertia('/', 'Page1/DataTableExample')->name('page1');
     Route::inertia('page2', 'Page2/ReverbExample')->name('page2');
+    Route::inertia('jobs', 'JobNotifications/JobNotificationsPage')->name('jobs');
+
     Route::inertia('profile', 'Users/ProfileEdit')->name('me.profile');
     Route::inertia('settings', 'Users/UserSettings')->name('me.settings');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy']);
