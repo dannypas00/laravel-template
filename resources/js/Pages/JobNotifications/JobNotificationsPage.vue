@@ -10,10 +10,10 @@
 
   <DataTable :data="jobs" :headers="getTableHeaders()" identifier="identifier">
     <template #progress-body="{ entry }">
-      <div class="w-24">
+      <div class="w-24" v-if="entry.maxProgress > 0">
         <div class="flex items-center space-x-2">
           <span>{{ entry.progress }} / {{ entry.maxProgress }}</span>
-          <span>{{ (entry.progress / entry.maxProgress) * 100 }}%</span>
+          <span>{{ ((entry.progress / entry.maxProgress) * 100).toFixed(0) }}%</span>
         </div>
         <div class="w-full overflow-hidden rounded-full bg-gray-200">
           <div
@@ -22,6 +22,9 @@
           ></div>
         </div>
       </div>
+      <span v-else>
+        Waiting to start
+      </span>
     </template>
   </DataTable>
 </template>
@@ -103,6 +106,15 @@ function getTableHeaders(): TableHeader<Job>[] {
 async function startNewJob() {
   const response = await axios.post(route('web.api.test-job'));
 
+  jobs.value[response.data] = {
+    identifier: response.data,
+    status: JobStatusEnum.QUEUED,
+    progress: 0,
+    maxProgress: 0,
+    started: null,
+    finished: null,
+  };
+
   window.Echo.private(`jobs.${response.data}`).listen(
     '.App\\Events\\JobUpdatedEvent',
     (event: {
@@ -111,6 +123,7 @@ async function startNewJob() {
       progress: number;
       maxProgress: number;
     }) => {
+      console.log('Job update', event);
       let job: Partial<Job> = jobs.value[event.identifier];
 
       if (!job) {
