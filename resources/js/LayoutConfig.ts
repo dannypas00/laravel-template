@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   TableCellsIcon,
   SpeakerWaveIcon,
+  ChatBubbleLeftIcon,
 } from '@heroicons/vue/24/outline';
 import { FunctionalComponent } from 'vue';
 
@@ -16,6 +17,7 @@ interface NavigationItem {
 const layoutNavigationItems: NavigationItem[] = [
   { name: 'DataTable Example', route: 'page1', icon: TableCellsIcon },
   { name: 'Reverb Example', route: 'page2', icon: SpeakerWaveIcon },
+  { name: 'Job Notifications', route: 'jobs', icon: ChatBubbleLeftIcon },
 ];
 
 const userNavigationItems: NavigationItem[] = [
