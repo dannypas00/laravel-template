@@ -28,6 +28,8 @@ Route::middleware([
 
     Route::inertia('/', 'Page1/DataTableExample')->name('page1');
     Route::inertia('page2', 'Page2/ReverbExample')->name('page2');
+    Route::inertia('formkit', 'Formkit/FormkitExample')->name('formkit');
+
     Route::inertia('profile', 'Users/ProfileEdit')->name('me.profile');
     Route::inertia('settings', 'Users/UserSettings')->name('me.settings');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy']);

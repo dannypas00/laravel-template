@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   TableCellsIcon,
   SpeakerWaveIcon,
+  ClipboardDocumentListIcon,
 } from '@heroicons/vue/24/outline';
 import { FunctionalComponent } from 'vue';
 
@@ -16,6 +17,7 @@ interface NavigationItem {
 const layoutNavigationItems: NavigationItem[] = [
   { name: 'DataTable Example', route: 'page1', icon: TableCellsIcon },
   { name: 'Reverb Example', route: 'page2', icon: SpeakerWaveIcon },
+  { name: 'Formkit example', route: 'formkit', icon: ClipboardDocumentListIcon },
 ];
 
 const userNavigationItems: NavigationItem[] = [

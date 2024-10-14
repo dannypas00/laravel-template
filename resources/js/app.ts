@@ -18,6 +18,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import SidebarLayout from './Layouts/SidebarLayout.vue';
+import { plugin as formkitPlugin, defaultConfig as formkitDefaultConfig } from '@formkit/vue'
 // import BrandedStackedLayout from './Layouts/BrandedStackedLayout.vue';
 
 library.add(fas, fab, far);
@@ -48,7 +49,8 @@ createInertiaApp({
       .use(PortalVue)
       .use(createPinia())
       .use(autoAnimatePlugin)
-      .use(VueToastificationPlugin, toastOptions);
+      .use(VueToastificationPlugin, toastOptions)
+      .use(formkitPlugin, formkitDefaultConfig);
 
     vue.config.globalProperties.$route = route;
     vue.config.globalProperties.$toast = useToast();
