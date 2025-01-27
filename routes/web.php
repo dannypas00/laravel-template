@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Actions\Fortify\CreateNewUser;
 use App\DataObjects\UserData;
 use App\Http\Controllers\Users\UserQueryBuilderController;
 use App\Http\Controllers\Users\UserUpdateController;
 use App\Jobs\TestJob;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -13,9 +14,9 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(static function () {
-    Route::name('api')->as('web.api.')->group(static function () {
-        Route::as('users.')->prefix('users')->group(static function () {
+])->group(static function (): void {
+    Route::name('api')->as('web.api.')->group(static function (): void {
+        Route::as('users.')->prefix('users')->group(static function (): void {
             Route::get('me', static fn (Request $request) => $request->user())->name('current');
             Route::get('', [UserQueryBuilderController::class, 'index'])->name('index');
             Route::get('{id}', [UserQueryBuilderController::class, 'show'])->name('show');
@@ -28,8 +29,9 @@ Route::middleware([
         });
 
         Route::post('test-job', static function () {
-            $job = new TestJob(100);
+            $job = new TestJob(30);
             dispatch($job);
+
             return $job->getIdentifier();
         })->name('test-job');
     });

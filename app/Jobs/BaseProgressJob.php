@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Enums\JobStatusEnum;
@@ -7,6 +9,7 @@ use App\Events\JobUpdatedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Log;
+use RateLimiter;
 use Str;
 
 class BaseProgressJob implements ShouldQueue
@@ -16,12 +19,16 @@ class BaseProgressJob implements ShouldQueue
     // Progress is always displayed a $progress / $maxProgress
     // Updating $maxProgress during runtime is supported
     private int $progress = 0;
+
     protected int $maxProgress = 100;
+
     protected string $identifier;
+
+    protected int $ratePerMinute = 20;
 
     public function __construct()
     {
-        $this->identifier = Str::uuid();
+        $this->identifier = Str::uuid()->toString();
     }
 
     public function getIdentifier(): string
@@ -50,10 +57,16 @@ class BaseProgressJob implements ShouldQueue
 
         Log::debug('Progressing');
 
-        JobUpdatedEvent::dispatch($this->identifier, $this->progress, $this->maxProgress, JobStatusEnum::RUNNING);
+        RateLimiter::attempt(
+            'progress-' . $this->identifier,
+            $this->ratePerMinute,
+            function (): void {
+                JobUpdatedEvent::dispatch($this->identifier, $this->progress, $this->maxProgress, JobStatusEnum::RUNNING);
+            }
+        );
     }
 
-    public function fail($exception = null)
+    public function fail($exception = null): void
     {
         JobUpdatedEvent::dispatch($this->identifier, $this->progress, $this->maxProgress, JobStatusEnum::FAILED);
     }

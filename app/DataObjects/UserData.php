@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataObjects;
 
 use App\Models\User;
@@ -19,7 +21,8 @@ class UserData extends Data
         public ?Carbon $email_verified_at,
         public ?Carbon $created_at,
         public ?Carbon $updated_at,
-    ) {}
+    ) {
+    }
 
     public static function fromModel(User $model): UserData
     {

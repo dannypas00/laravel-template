@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Enums\JobStatusEnum;
-use Auth;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -22,12 +23,13 @@ class JobUpdatedEvent implements ShouldBroadcast, ShouldDispatchAfterCommit
     public function broadcastWith(): array
     {
         return [
-            'identifier' => $this->identifier,
-            'progress' => $this->progress,
+            'identifier'  => $this->identifier,
+            'progress'    => $this->progress,
             'maxProgress' => $this->maxProgress,
-            'status' => $this->status->value,
+            'status'      => $this->status->value,
         ];
     }
+
     public function broadcastOn(): array
     {
         return [

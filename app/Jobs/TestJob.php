@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
-use Illuminate\Broadcasting\Channel;
-
+/**
+ * @codeCoverageIgnore It's an example class (and it uses sleep)
+ */
 class TestJob extends BaseProgressJob
 {
-    private const TICK_TIME = 1;
+    private const int TICK_TIME = 1;
 
     public function __construct(private readonly string $runtime)
     {
