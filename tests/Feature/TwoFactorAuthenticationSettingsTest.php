@@ -6,8 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
 
-uses(RefreshDatabase::class);
-
 test('two factor authentication can be enabled', function (): void {
     if (!Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two factor authentication is not enabled.');

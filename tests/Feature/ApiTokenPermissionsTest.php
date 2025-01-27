@@ -7,8 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 
-uses(RefreshDatabase::class);
-
 test('api token permissions can be updated', function (): void {
     if (!Features::hasApiFeatures()) {
         $this->markTestSkipped('API support is not enabled.');

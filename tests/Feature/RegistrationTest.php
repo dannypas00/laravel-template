@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
 use Laravel\Jetstream\Jetstream;
 
-uses(RefreshDatabase::class);
-
 test('registration screen can be rendered', function (): void {
     if (!Features::enabled(Features::registration())) {
         $this->markTestSkipped('Registration support is not enabled.');
@@ -42,5 +40,5 @@ test('new users can register', function (): void {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(config('fortify.home'));
 });

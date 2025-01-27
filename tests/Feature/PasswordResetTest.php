@@ -8,8 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Features;
 
-uses(RefreshDatabase::class);
-
 test('reset password link screen can be rendered', function (): void {
     if (!Features::enabled(Features::resetPasswords())) {
         $this->markTestSkipped('Password updates are not enabled.');
