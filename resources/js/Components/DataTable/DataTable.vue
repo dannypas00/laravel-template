@@ -67,9 +67,13 @@
                 :entry="entry"
                 :selected="selected?.includes(entry[identifier])"
               >
-                <slot v-if="header.bodySlot" :name="header.bodySlot" :header="header" :entry="entry" />
+                <slot
+                  v-if="header.bodySlot"
+                  :name="header.bodySlot"
+                  :header="header"
+                  :entry="entry"
+                />
               </DataTableCell>
-              <EditButton />
             </tr>
           </tbody>
         </table>
@@ -82,7 +86,6 @@
 import { computed, ModelRef, PropType } from 'vue';
 import { BulkOption, TableHeader } from './DataTableTypes';
 import DataTableCell from './Partials/DataTableCell.vue';
-import EditButton from './Partials/EditButton.vue';
 import TableHead from './Partials/TableHead.vue';
 import TableBulkAction from './Partials/TableBulkAction.vue';
 
@@ -106,7 +109,7 @@ defineProps({
   },
 
   data: {
-    type: Array as PropType<T[]>,
+    type: Array as PropType<T[] | Record<any, T>>,
     required: true,
   },
 

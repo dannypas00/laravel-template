@@ -13,11 +13,9 @@
       <div class="w-24" v-if="entry.maxProgress > 0">
         <div class="flex items-center space-x-2">
           <span>{{ entry.progress }} / {{ entry.maxProgress }}</span>
-          <span
-            >{{
-              ((entry.progress / entry.maxProgress) * 100).toFixed(0)
-            }}%</span
-          >
+          <span>
+            {{ ((entry.progress / entry.maxProgress) * 100).toFixed(0) }}%
+          </span>
         </div>
         <div class="w-full overflow-hidden rounded-full bg-gray-200">
           <div
