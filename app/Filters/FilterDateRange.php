@@ -8,9 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
+/**
+ * @codeCoverageIgnore
+ */
 class FilterDateRange implements Filter
 {
-    // TODO: This currently does weird stuff with dates in mysql
     public function __invoke(Builder $query, $value, string $property): void
     {
         if (is_array($value)) {
@@ -24,20 +26,16 @@ class FilterDateRange implements Filter
     private function filterRange(Builder $query, array $value, string $property): void
     {
         if ($value['end'] ?? false) {
-            $query->whereDate($property, '<=', Carbon::parse($value['end'])->endOfDay());
+            $query->whereDate($property, '<=', Carbon::parse($value['end'])->endOfDay()->toDateString());
         }
 
         if ($value['start'] ?? false) {
-            $query->whereDate($property, '>=', Carbon::parse($value['start'])->startOfDay());
+            $query->whereDate($property, '>=', Carbon::parse($value['start'])->startOfDay()->toDateString());
         }
     }
 
     private function filterExact(Builder $query, string $value, string $property): void
     {
-        $start = Carbon::parse($value);
-        $end = Carbon::parse($value)->addDay();
-
-        $query->whereDate($property, '>=', $start)
-            ->whereDate($property, '<', $end);
+        $query->whereDate($property, '=', Carbon::parse($value)->toDateString());
     }
 }

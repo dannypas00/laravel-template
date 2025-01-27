@@ -9,6 +9,9 @@ use App\Http\Controllers\QueryBuilderController;
 use App\Interfaces\SettingsInterface;
 use App\Settings\UserSettings;
 
+/**
+ * @codeCoverageIgnore No reason to test query builder controllers
+ */
 class UserQueryBuilderController extends QueryBuilderController
 {
     public function getDataObject(): string

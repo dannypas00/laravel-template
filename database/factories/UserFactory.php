@@ -37,7 +37,8 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'remember_token'            => Str::random(10),
             'current_team_id'           => null,
-            'created_at'                => $this->faker->dateTimeBetween('-10 days')
+            'created_at'                => $this->faker->dateTimeBetween('-10 days'),
+            'updated_at'                => $this->faker->dateTimeBetween('-10 days')
         ];
     }
 

@@ -34,11 +34,11 @@ import QueryBuilderTable from '../../Components/DataTable/QueryBuilderTable.vue'
 import { UserIndexRequest } from '../../Communication/Users/UserIndexRequest';
 import {
   BulkOption,
-  CreatedAtHeader,
   FilterType,
-  IdHeader,
+  getCreatedAtHeader,
+  getIdHeader,
+  getUpdatedAtHeader,
   TableHeader,
-  UpdatedAtHeader,
 } from '../../Components/DataTable/DataTableTypes';
 import PageHeader from '../../Components/Layout/PageHeader.vue';
 import { UserData } from '../../Types/generated';
@@ -72,7 +72,7 @@ export default defineComponent({
   methods: {
     getTableHeaders(): TableHeader<UserData>[] {
       return [
-        IdHeader,
+        getIdHeader<UserData>(),
         {
           key: 'name',
           title: this.$t('pages.page1.table.name_title'),
@@ -92,8 +92,8 @@ export default defineComponent({
             placeholder: this.$t('pages.page1.table.email_placeholder'),
           },
         },
-        CreatedAtHeader,
-        UpdatedAtHeader,
+        getCreatedAtHeader<UserData>(),
+        getUpdatedAtHeader<UserData>(),
       ];
     },
 
@@ -126,7 +126,5 @@ export default defineComponent({
       this.$refs.table.getData();
     },
   },
-
-  computed: {},
 });
 </script>
