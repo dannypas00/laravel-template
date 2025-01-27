@@ -6,7 +6,7 @@ on:
 jobs:
   Run-composer-test:
     runs-on: ubuntu-latest
-    container: '.docker/local/cli.Dockerfile'
+    container: "dannypas00/php-cli"
     steps:
       - name: Run composer test
         run: composer test
