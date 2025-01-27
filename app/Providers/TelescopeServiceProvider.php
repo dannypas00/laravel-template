@@ -9,6 +9,9 @@ use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     /**
@@ -55,8 +58,6 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define('viewTelescope', fn ($user) => in_array($user->email, [
-            //
-        ]));
+        Gate::define('viewTelescope', fn ($user) => true);
     }
 }

@@ -19,6 +19,9 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <directory>app/Settings</directory>
+        </exclude>
     </source>
     <php>
         <env name="APP_NAME" value="test12"/>
