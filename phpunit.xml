@@ -21,8 +21,9 @@
         </include>
     </source>
     <php>
-        <env name="APP_NAME" value="test12" force="true"/>
-        <env name="APP_ENV" value="testing" force="true"/>
+        <env name="APP_NAME" value="test12"/>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:ScBMJfwMA6a/X58zl3Z7yAOilWV1A+w9NuWnP7i2zdg="/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_STORE" value="array"/>
