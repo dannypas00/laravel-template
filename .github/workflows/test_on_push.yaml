@@ -1,0 +1,12 @@
+name: "Test on push"
+on:
+  push:
+  pull_request:
+
+jobs:
+  Run-composer-test:
+    runs-on: ubuntu-latest
+    container: '.docker/local/cli.Dockerfile'
+    steps:
+      - name: Run composer test
+        run: composer test
