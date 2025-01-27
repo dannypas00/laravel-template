@@ -26,9 +26,6 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Fortify::loginView(
-            static fn () => Inertia::render('Auth/LoginPage', ['can_register' => Features::registration()])
-        );
         if (Features::registration()) {
             Fortify::registerView(static fn () => Inertia::render('Auth/LoginPage', ['mode' => 'register']));
         }
