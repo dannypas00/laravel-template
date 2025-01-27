@@ -19,9 +19,6 @@ jobs:
       - name: Install npm
         run: npm install
 
-      - name: Remove hotfile
-        run: rm public/hot || true
-
       - name: Build NPM
         run: npm run build
 
