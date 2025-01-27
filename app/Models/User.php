@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,12 +16,12 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
+    use BroadcastsEvents;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use BroadcastsEvents;
 
     protected $fillable = [
         'name',

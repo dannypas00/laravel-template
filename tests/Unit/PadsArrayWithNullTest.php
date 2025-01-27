@@ -1,25 +1,19 @@
 <?php
 
-namespace Tests\Unit;
+declare(strict_types=1);
 
 use App\Traits\PadsArrayWithNull;
 
-use Tests\TestCase;
-
 use function PHPUnit\Framework\assertEquals;
 
-class PadsArrayWithNullTest extends TestCase
-{
-    use PadsArrayWithNull;
+uses(PadsArrayWithNull::class);
 
-    public function test_that_it_pads_array(): void
-    {
-        $keys = ['a', 'b', 'c'];
-        $values = [
-            'a' => 'testa',
-            'c' => 'testc',
-        ];
-        $padded = $this->padArrayWithNull($keys, $values);
-        assertEquals(['a' => 'testa', 'b' => null, 'c' => 'testc'], $padded);
-    }
-}
+test('that it pads array', function (): void {
+    $keys = ['a', 'b', 'c'];
+    $values = [
+        'a' => 'testa',
+        'c' => 'testc',
+    ];
+    $padded = $this->padArrayWithNull($keys, $values);
+    assertEquals(['a' => 'testa', 'b' => null, 'c' => 'testc'], $padded);
+});

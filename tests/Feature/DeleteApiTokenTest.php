@@ -1,33 +1,28 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
-use Tests\TestCase;
 
-class DeleteApiTokenTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    public function test_api_tokens_can_be_deleted(): void
-    {
-        if (!Features::hasApiFeatures()) {
-            $this->markTestSkipped('API support is not enabled.');
-        }
-
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
-
-        $token = $user->tokens()->create([
-            'name' => 'Test Token',
-            'token' => Str::random(40),
-            'abilities' => ['create', 'read'],
-        ]);
-
-        $response = $this->delete('/user/api-tokens/' . $token->id);
-
-        $this->assertCount(0, $user->fresh()->tokens);
+test('api tokens can be deleted', function (): void {
+    if (!Features::hasApiFeatures()) {
+        $this->markTestSkipped('API support is not enabled.');
     }
-}
+
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    $token = $user->tokens()->create([
+        'name'      => 'Test Token',
+        'token'     => Str::random(40),
+        'abilities' => ['create', 'read'],
+    ]);
+
+    $response = $this->delete('/user/api-tokens/' . $token->id);
+
+    expect($user->fresh()->tokens)->toHaveCount(0);
+});

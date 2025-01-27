@@ -22,7 +22,7 @@ Route::middleware([
             Route::get('all', [UserQueryBuilderController::class, 'all'])->name('all');
             Route::post(
                 'create',
-                static fn () => UserData::fromModel((new CreateNewUser())->create(request()?->input()))
+                static fn () => UserData::fromModel((new CreateNewUser)->create(request()?->input()))
             )->name('create');
             Route::put('{user}', UserUpdateController::class)->name('update');
         });
