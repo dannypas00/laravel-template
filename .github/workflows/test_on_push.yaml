@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     container: "dannypas00/php-cli"
     steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+
       - name: Install
         run: composer install
 
