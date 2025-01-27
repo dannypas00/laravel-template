@@ -8,5 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     container: "dannypas00/php-cli"
     steps:
+      - name: Install
+        run: composer install
+
       - name: Run composer test
-        run: composer test
+        run: composer run test
