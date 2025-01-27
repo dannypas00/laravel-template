@@ -21,8 +21,8 @@ DOCKER ?= docker
 DOCKER_COMPOSE ?= docker compose
 NODE_LOCAL ?= false
 
-PHP_CONTAINER = $(DOCKER_COMPOSE) run php
-NODE_CONTAINER = $(DOCKER_COMPOSE) run node
+PHP_CONTAINER = $(DOCKER_COMPOSE) run --rm php
+NODE_CONTAINER = $(DOCKER_COMPOSE) run --rm node
 
 ifeq ($(NO_DOCKER), true)
 PHP_CONTAINER =

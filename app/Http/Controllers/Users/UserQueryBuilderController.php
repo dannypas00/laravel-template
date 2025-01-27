@@ -16,6 +16,6 @@ class UserQueryBuilderController extends QueryBuilderController
 
     public function getSettings(): SettingsInterface
     {
-        return new UserSettings();
+        return new UserSettings;
     }
 }

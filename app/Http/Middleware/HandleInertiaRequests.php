@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\DataObjects\UserData;
-use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;

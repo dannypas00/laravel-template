@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Users;
 
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends BaseUserRequest
 {
