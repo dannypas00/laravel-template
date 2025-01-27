@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 test('login screen can be rendered', function (): void {
     $response = $this->get('/login');
@@ -22,7 +19,7 @@ test('users can authenticate using the login screen', function (): void {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(config('fortify.home'));
 });
 
 test('users can not authenticate with invalid password', function (): void {

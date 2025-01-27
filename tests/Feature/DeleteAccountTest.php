@@ -6,8 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Jetstream\Features;
 
-uses(RefreshDatabase::class);
-
 test('user accounts can be deleted', function (): void {
     if (!Features::hasAccountDeletionFeatures()) {
         $this->markTestSkipped('Account deletion is not enabled.');
