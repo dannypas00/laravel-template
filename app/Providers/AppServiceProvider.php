@@ -6,6 +6,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
