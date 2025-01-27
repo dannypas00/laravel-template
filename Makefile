@@ -125,7 +125,7 @@ endif
 
 database/seeders/: drop-db database/migrations/ database/factories/ up
 ifeq ($(ENV), local)
-	$(PHP) artisan db:seed --class=Database\\Seeders\\DatabaseSeeder
+	$(PHP) artisan db:seed
 endif
 
 .PHONY: docker-build up down
