@@ -5,11 +5,13 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 export default defineConfig({
   plugins: [
+    vueDevTools({
+      launchEditor: 'phpstorm',
+    }),
     laravel({
       input: ['resources/js/app.ts', 'resources/css/app.css'],
-      refresh: true,
+      refresh: false,
     }),
-    vueDevTools(),
     vue({
       template: {
         transformAssetUrls: {

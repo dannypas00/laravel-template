@@ -1,16 +1,22 @@
 <template>
   <Portal to="login-header">
-    {{ $t('pages.auth.forgot-password.header') }}
+    {{ $t('pages.auth.forgot_password.header') }}
   </Portal>
 
   <form @submit.prevent="requestPasswordEmail" class="space-y-6">
     <SimpleInput
-      v-model="email"
+      v-model="form.email"
       :label="$t('general.fields.email')"
       identifier="email"
       required
     />
-    {{ email }}
+
+    <button
+      type="submit"
+      class="flex w-full justify-center rounded-md bg-brand px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+    >
+      {{ $t('pages.auth.forgot_password.submit') }}
+    </button>
   </form>
 </template>
 
@@ -19,10 +25,17 @@ import AuthLayout from '../../Layouts/AuthLayout.vue';
 import { Portal } from 'portal-vue';
 import SimpleInput from '../../Components/Input/SimpleInput.vue';
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 defineOptions({
   layout: AuthLayout,
 });
 
-const email = ref();
+const form = useForm({
+  email: '',
+});
+
+function requestPasswordEmail() {
+  form.post(route('password.email'), { preserveState: true });
+}
 </script>
