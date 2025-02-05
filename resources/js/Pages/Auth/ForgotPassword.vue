@@ -9,6 +9,7 @@
       :label="$t('general.fields.email')"
       identifier="email"
       required
+      :error="$page.props.status || null"
     />
 
     <button
@@ -24,8 +25,15 @@
 import AuthLayout from '../../Layouts/AuthLayout.vue';
 import { Portal } from 'portal-vue';
 import SimpleInput from '../../Components/Input/SimpleInput.vue';
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+
+defineProps({
+  status: {
+    type: String,
+    required: false,
+    default: null,
+  },
+});
 
 defineOptions({
   layout: AuthLayout,
@@ -36,6 +44,9 @@ const form = useForm({
 });
 
 function requestPasswordEmail() {
-  form.post(route('password.email'), { preserveState: true });
+  form.post(route('password.email'), {
+    preserveState: true,
+    preserveScroll: true,
+  });
 }
 </script>
