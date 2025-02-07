@@ -1,6 +1,6 @@
 <template>
-  <Portal to="login-header">
-    {{ $t('pages.auth.login.header') }}
+  <Portal to="auth-header">
+    {{ $t('pages.login.header') }}
   </Portal>
 
   <div class="border-b border-gray-200">
@@ -30,7 +30,7 @@
     <SimpleInput
       v-model="form.name"
       v-if="selectedMode === 'register'"
-      :label="$t('pages.auth.login.name.label')"
+      :label="$t('pages.login.name.label')"
       autocomplete="username"
       identifier="name"
       required
@@ -38,7 +38,7 @@
 
     <SimpleInput
       v-model="form.email"
-      :label="$t('pages.auth.login.email.label')"
+      :label="$t('pages.login.email.label')"
       type="email"
       autocomplete="email"
       identifier="email"
@@ -47,7 +47,7 @@
 
     <SimpleInput
       v-model="form.password"
-      :label="$t('pages.auth.login.password.label')"
+      :label="$t('pages.login.password.label')"
       type="password"
       :autocomplete="selectedMode === 'login' ? 'current-password' : 'none'"
       identifier="password"
@@ -57,7 +57,7 @@
     <SimpleInput
       v-if="selectedMode === 'register'"
       v-model="form.password_confirmation"
-      :label="$t('pages.auth.login.password_confirmation.label')"
+      :label="$t('pages.login.password_confirmation.label')"
       type="password"
       autocomplete="none"
       identifier="password_confirmation"
@@ -74,7 +74,7 @@
           class="h-4 w-4 rounded border-gray-300 text-brand focus:ring-brand"
         />
         <label
-          v-t="'pages.auth.login.remember_me.label'"
+          v-t="'pages.login.remember_me.label'"
           for="remember-me"
           class="ml-3 block text-sm leading-6 text-gray-900"
         />
@@ -86,7 +86,7 @@
           as="a"
           :href="route('password.request')"
         >
-          {{ $t('pages.auth.login.forgot_password') }}
+          {{ $t('pages.login.forgot_password') }}
         </Link>
       </div>
     </div>
@@ -96,7 +96,7 @@
         type="submit"
         class="flex w-full justify-center rounded-md bg-brand px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
-        {{ $t('pages.auth.login.submit_button') }}
+        {{ $t('pages.login.submit_button') }}
       </button>
     </div>
 
@@ -105,7 +105,7 @@
         type="submit"
         class="flex w-full justify-center rounded-md bg-brand px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
-        {{ $t('pages.auth.login.register_button') }}
+        {{ $t('pages.login.register_button') }}
       </button>
     </div>
   </form>
@@ -133,8 +133,8 @@ const form = useForm({
 });
 
 const tabs = {
-  login: { name: I18n.global.t('pages.auth.login.login_tab') },
-  register: { name: I18n.global.t('pages.auth.login.register_tab') },
+  login: { name: I18n.global.t('pages.login.login_tab') },
+  register: { name: I18n.global.t('pages.login.register_tab') },
 };
 
 let selectedMode = ref('login');

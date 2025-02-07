@@ -1,0 +1,23 @@
+{
+    "email": {
+        "label": "Email"
+    },
+    "forgot_password": "Forgot password?",
+    "header": "Sign in to your account",
+    "login_tab": "Log in",
+    "name": {
+        "label": "Username"
+    },
+    "password": {
+        "label": "Password"
+    },
+    "password_confirmation": {
+        "label": "Confirm password"
+    },
+    "register_button": "Create a new account",
+    "register_tab": "Create a new account",
+    "remember_me": {
+        "label": "Remember me"
+    },
+    "submit_button": "Sign in"
+}

@@ -1,7 +1,7 @@
 {
-  "form": {
-    "name": "Verander je naam en zie hem in real-time updaten in het zijmenu:",
-    "submit": "Update naam"
-  },
-  "title": "Reverb Voorbeeld"
+    "form": {
+        "name": "Verander je naam en zie hem in real-time updaten in het zijmenu:",
+        "submit": "Update naam"
+    },
+    "title": "Reverb Voorbeeld"
 }
