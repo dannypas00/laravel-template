@@ -11,7 +11,7 @@ class TestJob extends BaseProgressJob
 {
     private const int TICK_TIME = 1;
 
-    public function __construct(private readonly string $runtime)
+    public function __construct(private readonly int $runtime)
     {
         parent::__construct();
         $this->maxProgress = $this->runtime;
