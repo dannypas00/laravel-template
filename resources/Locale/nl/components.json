@@ -1,45 +1,45 @@
 {
-  "confirmation": {
-    "default_negative_button": "Annuleer",
-    "default_positive_button": "Bevestig"
-  },
-  "datatable": {
-    "bulk_actions": {
-      "confirm_negative_button": "Nee",
-      "confirm_positive_button": "Ja",
-      "confirm_title": "Bevestig bulk actie",
-      "default_confirm_text": "Weet je zeker dat je deze {action} actie uit wilt voeren op alle {count} geselecteerde items?"
+    "confirmation": {
+        "default_negative_button": "Annuleer",
+        "default_positive_button": "Bevestig"
     },
-    "clear_title": "Maak veld leeg",
-    "created_at_title": "Aangemaakt",
-    "date_exact_header": {
-      "label": "Op datum"
+    "datatable": {
+        "bulk_actions": {
+            "confirm_negative_button": "Nee",
+            "confirm_positive_button": "Ja",
+            "confirm_title": "Bevestig bulk actie",
+            "default_confirm_text": "Weet je zeker dat je deze {action} actie uit wilt voeren op alle {count} geselecteerde items?"
+        },
+        "clear_title": "Maak veld leeg",
+        "created_at_title": "Aangemaakt",
+        "date_exact_header": {
+            "label": "Op datum"
+        },
+        "date_from_header": {
+            "label": "Sinds"
+        },
+        "date_range_header": {
+            "end": "Einde",
+            "start": "Start"
+        },
+        "date_until_header": {
+            "label": "Tot en met"
+        },
+        "edit_button": {
+            "text": "Bewerk"
+        },
+        "id_search_placeholder": "ID",
+        "id_title": "ID",
+        "updated_at_title": "Geüpdatet"
     },
-    "date_from_header": {
-      "label": "Sinds"
+    "layout": {
+        "open_main_menu": "Open hoofdmenu",
+        "open_user_menu": "Open gebruiker menu",
+        "view_notifications": "Bekijk notificaties",
+        "your_profile": "Uw profiel"
     },
-    "date_range_header": {
-      "end": "Einde",
-      "start": "Start"
-    },
-    "date_until_header": {
-      "label": "Tot en met"
-    },
-    "edit_button": {
-      "text": "Bewerk"
-    },
-    "id_search_placeholder": "ID",
-    "id_title": "ID",
-    "updated_at_title": "Geüpdatet"
-  },
-  "layout": {
-    "open_main_menu": "Open hoofdmenu",
-    "open_user_menu": "Open gebruiker menu",
-    "view_notifications": "Bekijk notificaties",
-    "your_profile": "Uw profiel"
-  },
-  "pagination": {
-    "next_button": "Volgende",
-    "previous_button": "Vorige"
-  }
+    "pagination": {
+        "next_button": "Volgende",
+        "previous_button": "Vorige"
+    }
 }

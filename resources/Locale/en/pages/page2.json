@@ -1,7 +1,7 @@
 {
-  "form": {
-    "name": "Change your name and see it update real-time in the sidebar:",
-    "submit": "Update name"
-  },
-  "title": "Reverb Example"
+    "form": {
+        "name": "Change your name and see it update real-time in the sidebar:",
+        "submit": "Update name"
+    },
+    "title": "Reverb Example"
 }
