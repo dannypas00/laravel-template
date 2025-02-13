@@ -55,6 +55,7 @@ services:
       - ""
       - --appendonly
       - no
+    user: root
 
   php:
     <<: *php
