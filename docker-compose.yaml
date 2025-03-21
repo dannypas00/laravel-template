@@ -65,13 +65,11 @@ services:
       - infinity
     profiles: !override
       - dev
-    environment:
-      TEST1234: aaaaa
 
   node:
     <<: *base
     container_name: ${APP_NAME}-node
-    image: dannypas00/node
+    image: dannypas00/node:22.11.0
     user: ${CUSTOM_USER:-1000}
     ports:
       - 5174:5174
