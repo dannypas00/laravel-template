@@ -5,7 +5,9 @@
       selected ? 'text-brand-dark' : 'text-gray-900',
     ]"
   >
-    {{ header.renderBody ? header.renderBody(entry) : entry[header.key] }}
+    <slot>
+      {{ header.renderBody ? header.renderBody(entry) : entry[header.key] }}
+    </slot>
   </td>
 </template>
 

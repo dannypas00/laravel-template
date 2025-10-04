@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Settings;
 
 use App\Filters\FilterDateRange;
@@ -31,8 +33,8 @@ class UserSettings implements SettingsInterface
             AllowedFilter::exact('id'),
             AllowedFilter::partial('name'),
             AllowedFilter::partial('email'),
-            AllowedFilter::custom('created_at', new FilterDateRange()),
-            AllowedFilter::custom('updated_at', new FilterDateRange()),
+            AllowedFilter::custom('created_at', new FilterDateRange),
+            AllowedFilter::custom('updated_at', new FilterDateRange),
         ];
     }
 

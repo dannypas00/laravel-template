@@ -1,34 +1,37 @@
+x-function-base: &base
+  restart: unless-stopped
+  env_file:
+    - path: .env
+      required: true
+  command:
+    - sleep
+    - infinity
+  profiles:
+    - dev
+    - prod
+  user: ${CUSTOM_USER:-1000}
+
+x-function-php: &php
+  restart: unless-stopped
+  user: ${CUSTOM_USER:-1000}
+  build:
+    dockerfile: cli.Dockerfile
+    context: .docker/local/
+  working_dir: /app
+  environment:
+    APP_NAME: "laravel-template-project"
+  command:
+    - sleep
+    - infinity
+  volumes:
+    - ./:/app:rw
+    - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
+    - $HOME/.config:/home/app/.config:rw
+  profiles:
+    - dev
+    - prod
+
 services:
-  x-function-base: &base
-    restart: unless-stopped
-    image: alpine
-    env_file:
-      - path: .env
-        required: true
-    command:
-      - sleep
-      - infinity
-    profiles:
-      - dev
-      - prod
-    user: ${CUSTOM_USER:-1000}
-
-  x-function-php: &php
-    <<: *base
-    build:
-      dockerfile: cli.Dockerfile
-      context: .docker/local/
-    environment:
-      APP_NAME: "laravel-template-project"
-    working_dir: /app
-    env_file:
-      - path: .env
-        required: true
-    volumes:
-      - ./:/app:rw
-      - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
-      - $HOME/.config:/home/app/.config:rw
-
   db:
     <<: *base
     container_name: ${APP_NAME}-db
@@ -37,7 +40,7 @@ services:
     ports:
       - "${MARIADB_PORT:-3306}:${MARIADB_PORT:-3306}"
     volumes:
-      - laravel-template-project-mysql:/var/lib/mysql/
+      - mysql:/var/lib/mysql/
     command:
       - mariadbd
       - --port=${MARIADB_PORT:-3306}
@@ -52,6 +55,7 @@ services:
       - ""
       - --appendonly
       - no
+    user: root
 
   php:
     <<: *php
@@ -65,7 +69,7 @@ services:
   node:
     <<: *base
     container_name: ${APP_NAME}-node
-    image: dannypas00/node
+    image: dannypas00/node:22.11.0
     user: ${CUSTOM_USER:-1000}
     ports:
       - 5174:5174
@@ -153,7 +157,22 @@ services:
       - "${MAILPIT_PORT:-1025}:1025"
       - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
 
+  preview:
+    build:
+      dockerfile: .docker/production/Dockerfile
+      context: .
+    container_name: ${APP_NAME}-preview
+    depends_on:
+      - redis
+      - db
+      - reverb
+      - schedule
+      - horizon
+    profiles:
+      - prod
+
+
 volumes:
-  laravel-template-project-mysql:
+  mysql:
   caddy_data:
   caddy_config:

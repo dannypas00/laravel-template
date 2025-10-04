@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Interfaces\QueryBuilderControllerInterface;
@@ -10,6 +12,9 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\PaginatedDataCollection;
 
+/**
+ * @codeCoverageIgnore No reason to test query builder controllers
+ */
 abstract class QueryBuilderController extends Controller implements QueryBuilderControllerInterface
 {
     public function show(int $id, ShowRepository $showRepository): Data

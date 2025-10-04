@@ -1,0 +1,29 @@
+name: "Test on push"
+on:
+  push:
+  pull_request:
+
+jobs:
+  Run-composer-test:
+    runs-on: ubuntu-latest
+    container:
+      image: "dannypas00/php-cli"
+      options: --user root
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+
+      - name: Copy over xdebug ini
+        run: cp .docker/local/xdebug.ini /usr/local/etc/php/conf.d/zz_xdebug.ini
+
+      - name: Install npm
+        run: npm install
+
+      - name: Build NPM
+        run: npm run build
+
+      - name: Install
+        run: composer install
+
+      - name: Run composer test
+        run: composer run test

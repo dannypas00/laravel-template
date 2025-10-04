@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Users;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * @codeCoverageIgnore It's just validation rules
+ */
 class BaseUserRequest extends FormRequest
 {
     public function authorize(): bool

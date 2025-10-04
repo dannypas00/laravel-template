@@ -1,3 +1,6 @@
 {
-  "cancel": "Cancel"
+    "cancel": "Cancel",
+    "fields": {
+        "email": "Email"
+    }
 }

@@ -10,7 +10,8 @@ DEVELOPER_FULLNAME ?= laravel-template-fullname
 DEVELOPER_USERNAME ?= laravel-template-username
 DEVELOPER_EMAIL ?= laravel-template@example.com
 
-# Replacement map using sed (see $(TEMPLATES) target below
+# DO NOT CHANGE THESE BEFORE RUNNING TEMPLATE TARGET
+# Replacement map using sed (see $(TEMPLATES) target below)
 TEMPLATE_GITHUB_URL = github\.com\/dannypas00\/laravel-template
 TEMPLATES = $(TEMPLATE_GITHUB_URL)/$(GITHUB_URL) laravel-template-namespace/$(PROJECT_NAMESPACE) laravel-template-project/$(PROJECT_NAME) laravel-template-fullname/$(DEVELOPER_FULLNAME) laravel-template-username/$(DEVELOPER_USERNAME) laravel-template@example.com/$(DEVELOPER_EMAIL)
 
@@ -20,8 +21,8 @@ DOCKER ?= docker
 DOCKER_COMPOSE ?= docker compose
 NODE_LOCAL ?= false
 
-PHP_CONTAINER = $(DOCKER_COMPOSE) run php
-NODE_CONTAINER = $(DOCKER_COMPOSE) run node
+PHP_CONTAINER = $(DOCKER_COMPOSE) run --rm php
+NODE_CONTAINER = $(DOCKER_COMPOSE) run --rm node
 
 ifeq ($(NO_DOCKER), true)
 PHP_CONTAINER =
@@ -55,7 +56,9 @@ install: $(TEMPLATES) dependencies .env docker-build composer.lock package-lock.
 project-setup: install init-db test-integration vendor/autoload.php
 
 dependencies:
+ifeq ($(NODE_LOCAL), true)
 	@(command -v npm > /dev/null) || (echo "NPM not installed" && exit 127)
+endif
 	@(command -v docker > /dev/null) || (echo "Docker not installed" && exit 127)
 	@(docker compose > /dev/null) || (echo "Docker compose plugin not installed" && exit 127)
 
@@ -74,7 +77,7 @@ clear-cache: up
 	[[ -f .env ]] || cp .env.example .env
 
 vendor: composer.lock
-composer.lock: up
+composer.lock:
 ifeq ($(ENV), local)
 	$(COMPOSER) install --prefer-dist
 else
@@ -82,7 +85,7 @@ else
 endif
 	$(COMPOSER) clear-cache --gc
 
-vendor/autoload.php: up
+vendor/autoload.php:
 ifeq ($(ENV), local)
 	$(COMPOSER) dump-autoload
 else
@@ -122,7 +125,7 @@ endif
 
 database/seeders/: drop-db database/migrations/ database/factories/ up
 ifeq ($(ENV), local)
-	$(PHP) artisan db:seed --class=Database\\Seeders\\DatabaseSeeder
+	$(PHP) artisan db:seed
 endif
 
 .PHONY: docker-build up down
@@ -133,7 +136,7 @@ endif
 
 up:
 ifneq ($(NO_DOCKER), true)
-	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) up -d --remove-orphans
+	$(DOCKER_COMPOSE) $(COMPOSE_PROFILE) up -d --remove-orphans --wait
 endif
 
 down:
@@ -158,4 +161,3 @@ resources/js/: package-lock.json
 	@# If public/hot is present, laravel will try to serve from vite server
 	@rm public/hot || true
 	$(NPM) run build
-

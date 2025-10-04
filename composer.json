@@ -1,105 +1,122 @@
 {
-  "name": "dannypas00/laravel-template-project",
-  "authors": [
-    {
-      "name": "laravel-template-fullname",
-      "email": "laravel-template@example.com",
-      "role": "Developer"
-    }
-  ],
-  "type": "project",
-  "description": "The skeleton application for the Laravel framework.",
-  "keywords": [
-    "laravel"
-  ],
-  "license": "MIT",
-  "require": {
-    "php": "^8.2",
-    "barryvdh/laravel-ide-helper": "^3.0",
-    "inertiajs/inertia-laravel": "^1.0",
-    "laravel/framework": "^11.0",
-    "laravel/horizon": "^5.24",
-    "laravel/jetstream": "^5.0",
-    "laravel/octane": "^2.5",
-    "laravel/reverb": "@beta",
-    "laravel/sanctum": "^4.0",
-    "laravel/tinker": "^2.9",
-    "spatie/laravel-data": "^4.4",
-    "spatie/laravel-query-builder": "^5.8",
-    "spatie/laravel-typescript-transformer": "^2.4",
-    "spatie/laravel-webhook-client": "^3.3",
-    "laravel/telescope": "^5.1",
-    "tightenco/ziggy": "^2.0",
-    "fakerphp/faker": "^1.23"
-  },
-  "require-dev": {
-    "brianium/paratest": "^7",
-    "laravel/pint": "^1.13",
-    "laravel/sail": "^1.26",
-    "mockery/mockery": "^1.6",
-    "nunomaduro/collision": "^8.0",
-    "phpunit/phpunit": "^10.5",
-    "roave/security-advisories": "dev-latest",
-    "spatie/laravel-ignition": "^2.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "App\\": "app/",
-      "Database\\Factories\\": "database/factories/",
-      "Database\\Seeders\\": "database/seeders/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover --ansi"
+    "name": "dannypas00/laravel-template-project",
+    "authors": [
+        {
+            "name": "laravel-template-fullname",
+            "email": "laravel-template@example.com",
+            "role": "Developer"
+        }
     ],
-    "post-update-cmd": [
-      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": [
+        "laravel"
     ],
-    "post-root-package-install": [
-      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-    ],
-    "post-create-project-cmd": [
-      "@php artisan key:generate --ansi",
-      "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-      "@php artisan migrate --graceful --ansi"
-    ],
-    "ide-helper": [
-      "@php artisan ide-helper:generate"
-    ],
-    "models": [
-      "@php artisan ide-helper:models -WRMp",
-      "@php vendor/bin/pint app/Models"
-    ],
-    "pint": [
-      "@php vendor/bin/pint"
-    ],
-    "test-integration": [
-      "@php artisan test --env=integration --testsuite=Integration"
-    ]
-  },
-  "extra": {
-    "laravel": {
-      "dont-discover": [
-        "laravel/telescope"
-      ]
-    }
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true,
-      "php-http/discovery": true
-    }
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "barryvdh/laravel-ide-helper": "^3.0",
+        "driftingly/rector-laravel": "^2.0",
+        "fakerphp/faker": "^1.23",
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/framework": "^12.0",
+        "laravel/horizon": "^5.24",
+        "laravel/jetstream": "^5.0",
+        "laravel/octane": "^2.5",
+        "laravel/reverb": "@beta",
+        "laravel/sanctum": "^4.0",
+        "laravel/telescope": "^5.1",
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-data": "^4.4",
+        "spatie/laravel-typescript-transformer": "^2.4",
+        "spatie/laravel-webhook-client": "^3.3",
+        "tightenco/ziggy": "^2.0",
+        "spatie/laravel-query-builder": "^6.3"
+    },
+    "require-dev": {
+        "brianium/paratest": "^7",
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "roave/security-advisories": "dev-latest",
+        "spatie/laravel-ignition": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
+        ],
+        "post-autoload-dump": [
+            "rm -fv bootstrap/cache/*.php",
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@clearCache",
+            "@php artisan package:discover --ansi",
+            "@ide-helper"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
+        ],
+        "models": [
+            "@php artisan ide-helper:models -WRMp",
+            "@php vendor/bin/pint app/Models",
+            "@php vendor/bin/rector app/Models"
+        ],
+        "pint": "pint .",
+        "rector": "rector",
+        "fix-ci": [
+            "@rector",
+            "@pint"
+        ],
+        "test-integration": [
+            "@php artisan test --env=integration --testsuite=Integration"
+        ],
+        "pail": "@php artisan pail --timeout=0",
+        "test": "@php artisan test --coverage --min=100 --exclude-testsuite=Integration"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "laravel/telescope"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.4"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

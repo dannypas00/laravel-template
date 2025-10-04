@@ -1,20 +1,20 @@
 {
-  "header": {
-    "new_button": "Nieuw"
-  },
-  "table": {
-    "delete_text": "Weet je zeker dat je deze {n} gebruikers wilt verwijderen?",
-    "email_placeholder": "Zoek bij e-mail..",
-    "email_title": "E-Mail",
-    "name_placeholder": "Zoek op naam..",
-    "name_title": "Naam"
-  },
-  "title": "DataTable voorbeeld",
-  "user_form": {
-    "email": "E-Mail",
-    "name": "Gebruiker naam",
-    "password": "Wachtwoord",
-    "password_confirmation": "Bevestig wachtwoord",
-    "submit": "Maak gebruiker"
-  }
+    "header": {
+        "new_button": "Nieuw"
+    },
+    "table": {
+        "delete_text": "Weet je zeker dat je deze {n} gebruikers wilt verwijderen?",
+        "email_placeholder": "Zoek bij e-mail..",
+        "email_title": "E-Mail",
+        "name_placeholder": "Zoek op naam..",
+        "name_title": "Naam"
+    },
+    "title": "DataTable voorbeeld",
+    "user_form": {
+        "email": "E-Mail",
+        "name": "Gebruiker naam",
+        "password": "Wachtwoord",
+        "password_confirmation": "Bevestig wachtwoord",
+        "submit": "Maak gebruiker"
+    }
 }

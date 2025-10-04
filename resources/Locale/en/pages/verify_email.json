@@ -1,0 +1,5 @@
+{
+    "header": "Verify email",
+    "info": "A verification mail has been sent to your email address at {mail}. Please click the link in the email to activate your account.",
+    "resend": "Resend verification mail"
+}

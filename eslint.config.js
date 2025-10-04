@@ -7,6 +7,6 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
   {
-    ignores: ['**/shims-vue.d.ts', '**/models.d.ts'],
+    ignores: ['**/shims-vue.d.ts', '**/generated.ts', '**/models.d.ts'],
   }
 );
