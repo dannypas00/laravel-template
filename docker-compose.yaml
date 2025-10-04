@@ -157,6 +157,21 @@ services:
       - "${MAILPIT_PORT:-1025}:1025"
       - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
 
+  preview:
+    build:
+      dockerfile: .docker/production/Dockerfile
+      context: .
+    container_name: ${APP_NAME}-preview
+    depends_on:
+      - redis
+      - db
+      - reverb
+      - schedule
+      - horizon
+    profiles:
+      - prod
+
+
 volumes:
   mysql:
   caddy_data:
