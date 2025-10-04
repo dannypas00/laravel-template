@@ -1,0 +1,17 @@
+services:
+  caddy:
+    image: caddy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./reverse-proxy.Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    tty: true
+
+volumes:
+  caddy_data:
+  caddy_config:
