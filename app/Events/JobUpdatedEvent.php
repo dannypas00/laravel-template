@@ -19,17 +19,21 @@ class JobUpdatedEvent implements ShouldBroadcast, ShouldDispatchAfterCommit
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(private readonly string $identifier, private readonly int $progress, private readonly int $maxProgress, private readonly JobStatusEnum $status)
-    {
+    public function __construct(
+        private readonly string $identifier,
+        private readonly int $progress,
+        private readonly int $maxProgress,
+        private readonly JobStatusEnum $status
+    ) {
     }
 
     public function broadcastWith(): array
     {
         return [
-            'identifier'  => $this->identifier,
-            'progress'    => $this->progress,
+            'identifier' => $this->identifier,
+            'progress' => $this->progress,
             'maxProgress' => $this->maxProgress,
-            'status'      => $this->status->value,
+            'status' => $this->status->value,
         ];
     }
 

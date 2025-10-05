@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+Broadcast::channel('users.{id}', static fn ($user, $id) => (int)Auth::id() === (int)$id);
+
+Broadcast::channel('jobs.{identifier}', static fn ($user, $id) => true);

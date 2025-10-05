@@ -16,7 +16,7 @@ x-function-php: &php
     context: .docker/local/
   working_dir: /app
   environment:
-    APP_NAME: "laravel-template-project"
+    APP_NAME: 'laravel-template-project'
   command:
     - sleep
     - infinity
@@ -32,7 +32,7 @@ services:
     image: postgres:latest
     user: root
     ports:
-      - "${DB_PORT:-5432}:${DB_PORT:-5432}"
+      - '${DB_PORT:-5432}:${DB_PORT:-5432}'
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_PASSWORD: ${DB_PASSWORD:-web}
@@ -50,7 +50,7 @@ services:
     command:
       - redis-server
       - --save
-      - ""
+      - ''
       - --appendonly
       - no
     user: root
@@ -108,7 +108,7 @@ services:
       - --host=0.0.0.0
       - --debug
     ports:
-      - "${REVERB_PORT:-6001}:6001"
+      - '${REVERB_PORT:-6001}:6001'
 
   frank:
     <<: *php
@@ -121,7 +121,7 @@ services:
     depends_on:
       - reverb
     ports:
-      - "${FRANKENPHP_PORT:-80}:8000"
+      - '${FRANKENPHP_PORT:-80}:8000'
     volumes:
       - ./:/app:rw
       - ./.docker/local/tests/output:/opt/phpstorm-coverage:rw
@@ -142,9 +142,8 @@ services:
     image: axllent/mailpit:latest
     command: []
     ports:
-      - "${MAIL_PORT:-1025}:1025"
-      - "${MAILPIT_INTERFACE_PORT:-8025}:8025"
-
+      - '${MAIL_PORT:-1025}:1025'
+      - '${MAILPIT_INTERFACE_PORT:-8025}:8025'
 
 volumes:
   postgres:
